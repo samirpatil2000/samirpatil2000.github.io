@@ -15,8 +15,8 @@ This is the repository for my personal portfolio website hosted at [samirpatil20
 - **Hero** - Brief introduction and links to resume, GitHub, and LinkedIn
 - **About Me** - Overview of skills and professional interests
 - **Experience** - Timeline of professional experience
-- **Projects** - Showcase of key projects with descriptions and tech stacks
-- **Blog** - Links to blog posts (placeholder for future content)
+- **GitHub Projects** - GitHub repository pins with star counts and descriptions
+- **Medium Blog** - Links to Medium profile and articles
 - **Resume** - Downloadable resume and embedded viewer
 - **Contact** - Contact information and social media links
 
@@ -45,12 +45,14 @@ This is the repository for my personal portfolio website hosted at [samirpatil20
 
 - **Resume**: Replace the file at `assets/resume.pdf` with your updated resume
 - **Profile Image**: Update the image at `assets/images/profile.jpg`
-- **Projects**: Edit the project cards in the `#projects` section of `index.html`
+- **GitHub Projects**: Update the repository names in the iframe src attributes and corresponding links in the `#projects` section
+- **Medium Blog**: Update the Medium profile link (currently https://medium.com/@samir00) in the `#blog` section
 - **Experience**: Update the timeline items in the `#experience` section
 
 ## Future Enhancements
 
-- Add a blog section with actual content
 - Implement project filtering by technology
 - Add a contact form with backend integration
 - Improve accessibility features
+- Add Medium RSS feed integration to automatically display latest articles
+- Implement dark/light mode toggle for GitHub repository cards
