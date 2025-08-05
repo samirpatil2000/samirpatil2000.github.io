@@ -3,141 +3,1081 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samir Patil - Full Stack Engineer</title>
+    <meta name="description" content="Samir Patil - Full Stack Engineer & Founding Engineer at Niti AI. Experienced in Go, Python, Java, JavaScript, React, Next.js, Node.js, Django, Spring Boot, AWS, and Flutter.">
+    <meta name="keywords" content="Samir Patil, Full Stack Engineer, Niti AI, Software Engineer, Go, Python, React, Next.js">
+    <meta property="og:title" content="Samir Patil – Full Stack Engineer & Founding Engineer at Niti AI">
+    <meta property="og:description" content="Full Stack Engineer with expertise in AI agents, SDKs, and scalable systems.">
+    <meta property="og:image" content="assets/images/profile.jpg">
+    <meta property="og:url" content="https://samirpatil2000.github.io">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Samir Patil – Full Stack Engineer & Founding Engineer at Niti AI</title>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --background-light: #f8f9fa;
+            --text-light: #333;
+            --card-light: #fff;
+            --border-light: #eaeaea;
+            --background-dark: #121212;
+            --text-dark: #f8f9fa;
+            --card-dark: #1e1e1e;
+            --border-dark: #333;
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        .light-mode {
+            --background: var(--background-light);
+            --text: var(--text-light);
+            --card: var(--card-light);
+            --border: var(--border-light);
+            --shadow: var(--shadow-light);
+        }
+
+        .dark-mode {
+            --background: var(--background-dark);
+            --text: var(--text-dark);
+            --card: var(--card-dark);
+            --border: var(--border-dark);
+            --shadow: var(--shadow-dark);
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            box-sizing: border-box;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
         .container {
-            width: 80%;
+            max-width: 1200px;
             margin: 0 auto;
-            overflow: hidden;
+            padding: 0 20px;
         }
+
+        /* Header & Navigation */
         header {
-            background: #333;
-            color: #fff;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: #77aaff 3px solid;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--card);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transition: var(--transition);
         }
-        header a {
-            color: #fff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 16px;
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
         }
-        header ul {
-            padding: 0;
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
             list-style: none;
         }
-        header li {
-            float: left;
-            display: inline;
-            padding: 0 20px 0 20px;
+
+        .nav-links li {
+            margin-left: 30px;
         }
-        header #branding {
-            float: left;
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: var(--transition);
         }
-        header #branding h1 {
-            margin: 0;
+
+        .nav-links a:hover {
+            color: var(--primary-color);
         }
-        header nav {
-            float: right;
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            animation: fadeInUp 1s ease 0.2s;
+            animation-fill-mode: both;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.4s;
+            animation-fill-mode: both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.6s;
+            animation-fill-mode: both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .skill-tag {
+            padding: 8px 16px;
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .skill-tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Experience Section */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            animation: fadeIn 1s ease;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card);
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -12px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -12px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: var(--card);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-date {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .timeline-title {
+            margin: 10px 0;
+        }
+
+        .timeline-description {
             margin-top: 10px;
         }
-        .profile-info {
-            background: #fff;
+
+        /* Projects Section */
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background-color: var(--card);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-content {
             padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .profile-info h2 {
-            margin-top: 0;
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
         }
-        .social-links a {
-            margin-right: 10px;
-            text-decoration: none;
-            color: #333;
-            border: 1px solid #333;
+
+        .project-description {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tech-tag {
             padding: 5px 10px;
-            border-radius: 5px;
+            background-color: var(--background);
+            border-radius: 20px;
+            font-size: 0.8rem;
         }
-        .social-links a:hover {
-            background-color: #333;
-            color: #fff;
+
+        .project-links {
+            display: flex;
+            gap: 15px;
         }
-        #projects ul {
-            list-style: none;
-            padding: 0;
+
+        .project-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
         }
-        #projects ul li {
-            background: #fff;
-            margin: 10px 0;
-            padding: 15px;
-            border-left: 5px solid #333;
+
+        .project-links a:hover {
+            color: var(--secondary-color);
         }
-        #contact p {
-            margin: 0;
+
+        /* Blog Section */
+        .blog-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
         }
-        footer {
-            text-align: center;
+
+        .blog-card {
+            background-color: var(--card);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-content {
             padding: 20px;
-            background: #333;
-            color: #fff;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .blog-date {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .blog-excerpt {
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Resume Section */
+        .resume-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .resume-download {
+            margin-bottom: 30px;
+        }
+
+        .resume-preview {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
             margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: var(--card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--card);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-item::after {
+                left: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--card);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
         }
     </style>
 </head>
-<body>
+<body class="light-mode">
     <header>
         <div class="container">
-            <div id="branding">
-                <h1>Samir Patil</h1>
-                <h2>Full Stack Engineer</h2>
-            </div>
             <nav>
-                <ul>
+                <div class="logo">SP</div>
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
                     <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
                     <li><a href="#projects">Projects</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#resume">Resume</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <div>
+                    <button class="theme-toggle" id="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </nav>
         </div>
     </header>
-    <div class="container">
-        <section id="about" class="profile-info">
-            <h2>About Me</h2>
-            <p>Full Stack Engineer with expertise in backend development, focusing on System Design, Data Structures & Algorithms. Experienced in Python, Django, Java, Spring Boot, NodeJs, ReactJs, and more.</p>
-            <p>Currently working at <a href="https://niti.ai" target="_blank">NitiAi</a>. Ex-Apik, Semaai, Zopper.</p>
-            <p>Currently learning System Design, Frontend (React/NextJs), and GoLang.</p>
-            <h2>Connect with me:</h2>
-            <p class="social-links">
-                <a href="https://www.linkedin.com/in/sampatil1010/" target="_blank">LinkedIn</a> 
-                <a href="https://twitter.com/sampatil1010" target="_blank">Twitter</a>
-            </p>
-        </section>
-        <section id="projects" class="profile-info">
-            <h2>Projects</h2>
-            <ul>
-                <li><a href="https://github.com/samirpatil2000/EasyBinaryTree" target="_blank">EasyBinaryTree</a> - Make Binary trees easy for everyone (Python)</li>
-                <li><a href="https://github.com/samirpatil2000/BlogApp" target="_blank">BlogApp</a> - Django Dynamic Blog (CSS)</li>
-                <li><a href="https://github.com/samirpatil2000/Shopping-Portal" target="_blank">Shopping-Portal</a> - Ecommerce Shopping Portal (HTML)</li>
-                <li><a href="https://github.com/samirpatil2000/Programs101" target="_blank">Programs101</a> - Collection of various Python programs</li>
-                <li><a href="https://github.com/samirpatil2000/HackathonProject" target="_blank">HackathonProject</a> - Online platform for sharing goods with society members (JavaScript)</li>
-                <li><a href="https://github.com/samirpatil2000/VITLibrary" target="_blank">VITLibrary</a> - Online Portal For Notes and Pdf files (HTML)</li>
-            </ul>
-        </section>
-        <section id="contact" class="profile-info">
-            <h2>Contact</h2>
-            <p>Email: <a href="mailto:samirspatil742099@gmail.com">samirspatil742099@gmail.com</a></p>
-        </section>
-    </div>
+
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Hi, I'm Samir 👋</h1>
+                <h2 class="hero-subtitle">Founding Engineer @ Niti AI | Full-Stack Developer | AI Agents & SDKs | Ex - Apik, Semaai, Zopper</h2>
+                <p class="hero-description">Passionate about solving hard problems in scalable systems and AI agent infrastructure.</p>
+                <div class="hero-buttons">
+                    <a href="#resume" class="btn">View Resume</a>
+                    <a href="https://github.com/samirpatil2000" target="_blank" class="btn btn-outline">View GitHub</a>
+                    <a href="https://www.linkedin.com/in/sampatil1010/" target="_blank" class="btn btn-outline">Connect on LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm a passionate Full Stack Engineer with over 4 years of experience in startups. Currently, I'm working as a Founding Engineer at Niti AI, where I'm building AI agents and SDKs.</p>
+                    <p>I'm deeply interested in solving hard problems in scalable systems and AI agent infrastructure. My experience spans across various domains including event-driven backend systems, payment integrations, chat APIs, and more.</p>
+                    <p>Throughout my career, I've worked with a diverse set of technologies and continuously strive to expand my knowledge and skills.</p>
+                </div>
+                <div>
+                    <h3>Key Skills</h3>
+                    <div class="skills-container">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Golang</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Next.js</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">Spring Boot</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">NoSQL</span>
+                        <span class="skill-tag">SDK Development</span>
+                        <span class="skill-tag">AI Agents</span>
+                        <span class="skill-tag">Flutter</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2023 - Present</span>
+                        <h3 class="timeline-title">Founding Engineer - Niti AI</h3>
+                        <p class="timeline-description">Building AI agents and SDKs using Go, Python, and React. Working on scalable infrastructure for AI applications.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2022 - 2023</span>
+                        <h3 class="timeline-title">Software Engineer - Apik</h3>
+                        <p class="timeline-description">Developed event-driven backend systems, implemented payment integrations, and designed batch processing solutions.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2021 - 2022</span>
+                        <h3 class="timeline-title">Backend Developer - Semaai</h3>
+                        <p class="timeline-description">Built chat APIs, implemented price comparison features, and optimized system performance.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2020 - 2021</span>
+                        <h3 class="timeline-title">Software Engineer - Zopper</h3>
+                        <p class="timeline-description">Developed insurance APIs and built scalable Django systems for the insurance tech platform.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2020</span>
+                        <h3 class="timeline-title">Software Developer - InternYuva</h3>
+                        <p class="timeline-description">Worked on web development projects and contributed to the company's core platform.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2019</span>
+                        <h3 class="timeline-title">Intern - JustGetIt</h3>
+                        <p class="timeline-description">Assisted in developing e-commerce solutions and gained hands-on experience with web technologies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-container">
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">HackathonProject</h3>
+                        <p class="project-description">Community-sharing platform for reducing carbon emissions. Allows society members to share goods and resources.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/samirpatil2000/HackathonProject" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">AnyShare-Services</h3>
+                        <p class="project-description">Backend microservice suite for efficient resource sharing. Implements scalable APIs for resource management.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">REST API</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/samirpatil2000/AnyShare-Services" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">EasyBinaryTree</h3>
+                        <p class="project-description">Library to make Binary trees easy for everyone. Provides intuitive APIs for tree operations.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Data Structures</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/samirpatil2000/EasyBinaryTree" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">BlogApp</h3>
+                        <p class="project-description">Django Dynamic Blog with user authentication, commenting system, and responsive design.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">CSS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/samirpatil2000/BlogApp" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">Shopping-Portal</h3>
+                        <p class="project-description">Ecommerce Shopping Portal with product catalog, cart functionality, and checkout process.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/samirpatil2000/Shopping-Portal" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">Programs101</h3>
+                        <p class="project-description">Collection of various Python programs showcasing algorithms, data structures, and problem-solving techniques.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Algorithms</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/samirpatil2000/Programs101" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog">
+        <div class="container">
+            <h2 class="section-title">Blog</h2>
+            <div class="blog-container">
+                <div class="blog-card">
+                    <div class="blog-content">
+                        <h3 class="blog-title">Coming Soon</h3>
+                        <p class="blog-date">Future Post</p>
+                        <p class="blog-excerpt">I'll be sharing my thoughts and experiences on software development, AI, and technology soon. Stay tuned!</p>
+                        <a href="https://medium.com/" target="_blank" class="read-more">Follow on Medium <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resume">
+        <div class="container">
+            <h2 class="section-title">Resume</h2>
+            <div class="resume-container">
+                <div class="resume-download">
+                    <a href="assets/resume.pdf" download class="btn">Download Resume</a>
+                </div>
+                <p>You can download my resume using the button above or view it below:</p>
+                <iframe src="assets/resume.pdf" class="resume-preview"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3>Email</h3>
+                            <p><a href="mailto:samirspatil742099@gmail.com">samirspatil742099@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Location</h3>
+                            <p>India</p>
+                        </div>
+                    </div>
+                    <h3>Connect with me</h3>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/sampatil1010/" target="_blank" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/samirpatil2000" target="_blank" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://twitter.com/sampatil1010" target="_blank" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <p>Feel free to reach out to me for any opportunities, collaborations, or just to say hello! I'm always open to discussing new projects and ideas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        <p>&copy; 2024 Samir Patil. All Rights Reserved.</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#hero">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#blog">Blog</a>
+                    <a href="#resume">Resume</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <p class="copyright">&copy; 2024 Samir Patil. All Rights Reserved.</p>
+            </div>
+        </div>
     </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+
+        // Check for saved theme preference or use default
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        body.classList.add(`${savedTheme}-mode`);
+        updateIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('light-mode')) {
+                body.classList.replace('light-mode', 'dark-mode');
+                localStorage.setItem('theme', 'dark');
+                updateIcon('dark');
+            } else {
+                body.classList.replace('dark-mode', 'light-mode');
+                localStorage.setItem('theme', 'light');
+                updateIcon('light');
+            }
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                icon.classList.replace('fa-times', 'fa-bars');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.replace('fa-times', 'fa-bars');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animate elements when they come into view
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item, .project-card, .blog-card').forEach(item => {
+            observer.observe(item);
+        });
+    </script>
 </body>
 </html>
