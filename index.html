@@ -7,51 +7,62 @@
     <meta name="keywords" content="Samir Patil, Full Stack Engineer, Niti AI, Software Engineer, Go, Python, React, Next.js">
     <meta property="og:title" content="Samir Patil – Full Stack Engineer & Founding Engineer at Niti AI">
     <meta property="og:description" content="Full Stack Engineer with expertise in AI agents, SDKs, and scalable systems.">
-    <meta property="og:image" content="assets/images/profile.jpg">
     <meta property="og:url" content="https://samirpatil2000.github.io">
     <meta name="twitter:card" content="summary_large_image">
     <title>Samir Patil – Full Stack Engineer & Founding Engineer at Niti AI</title>
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Inter (Sans) and Fira Code (Mono) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="light-mode">
+<body>
     <header>
         <div class="container">
             <nav>
-                <div class="logo">SP</div>
+                <a href="#hero" class="logo">SP</a>
                 <ul class="nav-links">
-                    <li><a href="#hero">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#resume">Resume</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#hero">00_Home</a></li>
+                    <li><a href="#about">01_About</a></li>
+                    <li><a href="#experience">02_Experience</a></li>
+                    <li><a href="#projects">03_Projects</a></li>
+                    <li><a href="#blog">04_Blog</a></li>
+                    <li><a href="#resume">05_Resume</a></li>
+                    <li><a href="#contact">06_Contact</a></li>
                 </ul>
-                <div>
-                    <button class="theme-toggle" id="theme-toggle">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                    <button class="mobile-menu-btn" id="mobile-menu-btn">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </nav>
         </div>
     </header>
 
     <section id="hero">
         <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Hi, I'm Samir 👋</h1>
-                <h2 class="hero-subtitle">Founding Engineer @ Niti AI | Full-Stack Developer | AI Agents & SDKs | Ex - Apik, Semaai, Zopper</h2>
-                <p class="hero-description">Passionate about solving hard problems in scalable systems and AI agent infrastructure.</p>
-                <div class="hero-buttons">
-                    <a href="#resume" class="btn">View Resume</a>
-                    <a href="https://github.com/samirpatil2000" target="_blank" class="btn btn-outline">View GitHub</a>
-                    <a href="https://www.linkedin.com/in/sampatil1010/" target="_blank" class="btn btn-outline">Connect on LinkedIn</a>
+            <div class="hero-grid">
+                <div class="hero-main">
+                    <span class="system-label">SYS_INIT // PROFILE</span>
+                    <h1 class="hero-title">Samir Patil</h1>
+                    <p class="hero-subtitle">Founding Engineer @ Niti AI | Full-Stack Developer | AI Agents & SDKs | Ex - Apik, Semaai, Zopper</p>
+                    <p class="mb-2">Passionate about solving hard problems in scalable systems and AI agent infrastructure.</p>
+                    <div class="hero-actions mt-2">
+                        <a href="#resume" class="btn btn-primary">Resume</a>
+                        <a href="https://github.com/samirpatil2000" target="_blank" class="btn">GitHub</a>
+                        <a href="https://www.linkedin.com/in/sampatil1010/" target="_blank" class="btn">LinkedIn</a>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat-panel stat-block">
+                        <span class="stat-value" data-target="4">0</span>
+                        <span class="stat-label">Years Exp</span>
+                    </div>
+                    <div class="hero-stat-panel stat-block">
+                        <span class="stat-value" data-target="5">0</span>
+                        <span class="stat-label">Companies</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -59,23 +70,20 @@
 
     <section id="about">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
+            <h2 class="section-label">01_About</h2>
+            <div class="about-grid">
+                <div class="panel about-text-panel">
+                    <span class="system-label">BACKGROUND_DATA</span>
                     <p>I'm a passionate Full Stack Engineer with over 4 years of experience in startups. Currently, I'm working as a Founding Engineer at Niti AI, where I'm building AI agents and SDKs.</p>
                     <p>I'm deeply interested in solving hard problems in scalable systems and AI agent infrastructure. My experience spans across various domains including event-driven backend systems, payment integrations, chat APIs, and more.</p>
-                    <p>Throughout my career, I've worked with a diverse set of technologies and continuously strive to expand my knowledge and skills.</p>
-
-                    <div class="philosophy-section">
-                        <h3>💡 My Philosophy</h3>
-                        <div class="philosophy-content">
-                            <p>I don't aim for perfection in the first release. Instead, I focus on launching a stable version, gathering feedback, and then iterating quickly. Over time, this approach brings me closer to perfection. I usually follow the <strong>Pareto Principle (80/20 rule)</strong> — focusing on the 20% of effort that delivers 80% of results.</p>
-                        </div>
+                    <div class="philosophy-box">
+                        <span class="system-label">PHILOSOPHY</span>
+                        <p>I don't aim for perfection in the first release. Instead, I focus on launching a stable version, gathering feedback, and then iterating quickly. I follow the <strong>Pareto Principle (80/20 rule)</strong> — focusing on the 20% of effort that delivers 80% of results.</p>
                     </div>
                 </div>
-                <div>
-                    <h3>Key Skills</h3>
-                    <div class="skills-container">
+                <div class="panel">
+                    <span class="system-label">TECH_STACK</span>
+                    <div class="skills-panel mt-2">
                         <span class="skill-tag">Python</span>
                         <span class="skill-tag">Golang</span>
                         <span class="skill-tag">Java</span>
@@ -87,7 +95,6 @@
                         <span class="skill-tag">FastAPI</span>
                         <span class="skill-tag">Flask</span>
                         <span class="skill-tag">Spring Boot</span>
-                        <span class="skill-tag">AWS</span>
                         <span class="skill-tag">SQL</span>
                         <span class="skill-tag">NoSQL</span>
                         <span class="skill-tag">SDK Development</span>
@@ -104,48 +111,67 @@
 
     <section id="experience">
         <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
+            <h2 class="section-label">02_Experience</h2>
+            <div class="timeline-stack">
+                <div class="timeline-card">
+                    <div class="timeline-meta">
                         <span class="timeline-date">2023 July - Present</span>
-                        <h3 class="timeline-title">Founding Engineer - Niti AI</h3>
-                        <p class="timeline-description">Building AI agents and SDKs using Go, Python, and React. Working on scalable infrastructure for AI applications.</p>
+                        <span class="system-label">CURRENT</span>
+                    </div>
+                    <div>
+                        <h3 class="timeline-role">Founding Engineer</h3>
+                        <div class="timeline-company mb-2">Niti AI</div>
+                        <p>Building AI agents and SDKs using Go, Python, and React. Working on scalable infrastructure for AI applications.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
+                <div class="timeline-card">
+                    <div class="timeline-meta">
                         <span class="timeline-date">2022 Dec - 2023 July</span>
-                        <h3 class="timeline-title">Software Engineer Intern- Apik</h3>
-                        <p class="timeline-description">Developed event-driven backend systems, implemented payment integrations, and designed batch processing solutions.</p>
+                    </div>
+                    <div>
+                        <h3 class="timeline-role">Software Engineer Intern</h3>
+                        <div class="timeline-company mb-2">Apik</div>
+                        <p>Developed event-driven backend systems, implemented payment integrations, and designed batch processing solutions.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
+                <div class="timeline-card">
+                    <div class="timeline-meta">
                         <span class="timeline-date">2021 Nov - 2022 Dec</span>
-                        <h3 class="timeline-title">Backend Developer Intern- Semaai</h3>
-                        <p class="timeline-description">Built chat APIs, implemented price comparison features, and optimized system performance.</p>
+                    </div>
+                    <div>
+                        <h3 class="timeline-role">Backend Developer Intern</h3>
+                        <div class="timeline-company mb-2">Semaai</div>
+                        <p>Built chat APIs, implemented price comparison features, and optimized system performance.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
+                <div class="timeline-card">
+                    <div class="timeline-meta">
                         <span class="timeline-date">2021 June - 2021 Oct</span>
-                        <h3 class="timeline-title">Software Engineer Intern- Zopper </h3>
-                        <p class="timeline-description">Developed insurance APIs and built scalable Django systems for the insurance tech platform.</p>
+                    </div>
+                    <div>
+                        <h3 class="timeline-role">Software Engineer Intern</h3>
+                        <div class="timeline-company mb-2">Zopper</div>
+                        <p>Developed insurance APIs and built scalable Django systems for the insurance tech platform.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
+                <div class="timeline-card">
+                    <div class="timeline-meta">
                         <span class="timeline-date">2020</span>
-                        <h3 class="timeline-title">Software Developer - InternYuva</h3>
-                        <p class="timeline-description">Worked on web development projects and contributed to the company's core platform.</p>
+                    </div>
+                    <div>
+                        <h3 class="timeline-role">Software Developer</h3>
+                        <div class="timeline-company mb-2">InternYuva</div>
+                        <p>Worked on web development projects and contributed to the company's core platform.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
+                <div class="timeline-card">
+                    <div class="timeline-meta">
                         <span class="timeline-date">2019</span>
-                        <h3 class="timeline-title">Intern - JustGetIt</h3>
-                        <p class="timeline-description">Assisted in developing e-commerce solutions and gained hands-on experience with web technologies.</p>
+                    </div>
+                    <div>
+                        <h3 class="timeline-role">Intern</h3>
+                        <div class="timeline-company mb-2">JustGetIt</div>
+                        <p>Assisted in developing e-commerce solutions and gained hands-on experience with web technologies.</p>
                     </div>
                 </div>
             </div>
@@ -154,216 +180,157 @@
 
     <section id="projects">
         <div class="container">
-            <h2 class="section-title">GitHub Projects</h2>
-            <p class="text-center" style="margin-bottom: 30px;">Check out some of my open-source projects on GitHub:</p>
-            <div class="github-repos">
-                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
-                    <!-- GitHub Repository Cards -->
-                    <div class="github-card" style="width: 100%; max-width: 350px;">
-                        <iframe src="https://ghbtns.com/github-btn.html?user=samirpatil2000&repo=clipboard-typer&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
-                        <h3><a href="https://github.com/samirpatil2000/clipboard-typer" target="_blank">clipboard-typer</a></h3>
+            <h2 class="section-label">03_Projects</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><a href="https://github.com/samirpatil2000/clipboard-typer" target="_blank">clipboard-typer</a></h3>
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="card-body">
                         <p>A utility tool that helps type clipboard content automatically, improving productivity and reducing manual typing effort.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Automation</span>
-                            <span class="tech-tag">Productivity</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-tech">
+                            <span class="card-tech-tag">Python</span>
+                            <span class="card-tech-tag">Automation</span>
                         </div>
                     </div>
-
-                    <div class="github-card" style="width: 100%; max-width: 350px;">
-                        <iframe src="https://ghbtns.com/github-btn.html?user=samirpatil2000&repo=django-boiler-plate&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
-                        <h3><a href="https://github.com/samirpatil2000/django-boiler-plate" target="_blank">django-boiler-plate</a></h3>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><a href="https://github.com/samirpatil2000/django-boiler-plate" target="_blank">django-boiler-plate</a></h3>
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="card-body">
                         <p>A ready-to-use Django project template with pre-configured settings and common functionalities to kickstart web development.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Django</span>
-                            <span class="tech-tag">Web Development</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-tech">
+                            <span class="card-tech-tag">Python</span>
+                            <span class="card-tech-tag">Django</span>
                         </div>
                     </div>
-
-                    <div class="github-card" style="width: 100%; max-width: 350px;">
-                        <iframe src="https://ghbtns.com/github-btn.html?user=samirpatil2000&repo=hashicorp-vault-nginx&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
-                        <h3><a href="https://github.com/samirpatil2000/hashicorp-vault-nginx" target="_blank">hashicorp-vault-nginx</a></h3>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><a href="https://github.com/samirpatil2000/hashicorp-vault-nginx" target="_blank">hashicorp-vault-nginx</a></h3>
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="card-body">
                         <p>Integration of HashiCorp Vault with Nginx for secure secret management and authentication in web applications.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">DevOps</span>
-                            <span class="tech-tag">Security</span>
-                            <span class="tech-tag">Nginx</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-tech">
+                            <span class="card-tech-tag">DevOps</span>
+                            <span class="card-tech-tag">Nginx</span>
                         </div>
                     </div>
                 </div>
-
-                <div style="text-align: center; margin-top: 40px;">
-                    <a href="https://github.com/samirpatil2000" target="_blank" class="btn">View More on GitHub</a>
-                </div>
+            </div>
+            <div class="text-center mt-2" style="margin-top: 40px;">
+                <a href="https://github.com/samirpatil2000" target="_blank" class="btn">View All Repositories</a>
             </div>
         </div>
     </section>
 
     <section id="blog">
         <div class="container">
-            <h2 class="section-title">Medium Blog</h2>
-            <p class="text-center" style="margin-bottom: 30px;">Check out my latest articles on Medium:</p>
-            <div class="blog-container">
-                <!-- Article 1 -->
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="https://miro.medium.com/v2/resize:fill:160:106/1*5sMGe4D184qGsG5oATZ93Q.jpeg" alt="LLM Mocks" class="article-image">
-                    </div>
-                    <div class="blog-content">
-                        <p class="blog-date">Jun 22, 2024 <span class="claps">• 2 claps</span></p>
-                        <h3 class="blog-title">LLM Mocks: Your New Dev Shortcut</h3>
-                        <p class="blog-excerpt">How to use LLM mocks for faster prototyping and testing in dev environments.</p>
-                        <div class="medium-cta">
-                            <a href="https://samir00.medium.com/llm-mocks-your-new-dev-shortcut-bc9ee9c9f8b7" target="_blank" class="read-more">
-                                Read on Medium <i class="fab fa-medium"></i>
-                            </a>
+            <h2 class="section-label">04_Blog</h2>
+            <div class="grid-3">
+                <div class="card blog-card">
+                    <img src="https://miro.medium.com/v2/resize:fill:400:200/1*5sMGe4D184qGsG5oATZ93Q.jpeg" alt="LLM Mocks" class="card-image">
+                    <div class="card-body">
+                        <div class="blog-meta">
+                            <span>Jun 22, 2024</span>
+                            <span class="system-label" style="margin: 0;">ARTICLE</span>
                         </div>
+                        <h3 class="card-title mb-2"><a href="https://samir00.medium.com/llm-mocks-your-new-dev-shortcut-bc9ee9c9f8b7" target="_blank">LLM Mocks: Your New Dev Shortcut</a></h3>
+                        <p>How to use LLM mocks for faster prototyping and testing in dev environments.</p>
+                    </div>
+                    <div class="card-footer" style="background-color: transparent;">
+                        <a href="https://samir00.medium.com/llm-mocks-your-new-dev-shortcut-bc9ee9c9f8b7" target="_blank" class="read-link">
+                            Read Post <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Article 2 -->
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="https://miro.medium.com/v2/resize:fill:160:106/0*oaUl97Jm3WKkz9tT.png" alt="Groww Investment Calculation" class="article-image">
-                    </div>
-                    <div class="blog-content">
-                        <p class="blog-date">Jan 22, 2024 <span class="claps">• 2 claps</span></p>
-                        <h3 class="blog-title">How does a platform like Groww calculate your investments in real-time?</h3>
-                        <p class="blog-excerpt">Breakdown of investment value tracking with live stock data pipelines.</p>
-                        <div class="medium-cta">
-                            <a href="https://samir00.medium.com/how-does-a-platform-like-groww-calculate-your-investments-in-real-time-1ba891a44692" target="_blank" class="read-more">
-                                Read on Medium <i class="fab fa-medium"></i>
-                            </a>
+                <div class="card blog-card">
+                    <img src="https://miro.medium.com/v2/resize:fill:400:200/0*oaUl97Jm3WKkz9tT.png" alt="Groww Investment" class="card-image">
+                    <div class="card-body">
+                        <div class="blog-meta">
+                            <span>Jan 22, 2024</span>
+                            <span class="system-label" style="margin: 0;">ANALYSIS</span>
                         </div>
+                        <h3 class="card-title mb-2"><a href="https://samir00.medium.com/how-does-a-platform-like-groww-calculate-your-investments-in-real-time-1ba891a44692" target="_blank">How Groww calculates investments</a></h3>
+                        <p>Breakdown of investment value tracking with live stock data pipelines.</p>
+                    </div>
+                    <div class="card-footer" style="background-color: transparent;">
+                        <a href="https://samir00.medium.com/how-does-a-platform-like-groww-calculate-your-investments-in-real-time-1ba891a44692" target="_blank" class="read-link">
+                            Read Post <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Article 3 -->
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="https://miro.medium.com/v2/da:true/resize:fill:160:106/0*R4P3ovZNBAdf21QX" alt="Storing Pincode Data" class="article-image">
-                    </div>
-                    <div class="blog-content">
-                        <p class="blog-date">Jan 1, 2024</p>
-                        <h3 class="blog-title">Storing Pincode Data: Exploring the Best Approach</h3>
-                        <p class="blog-excerpt">Optimized strategies for handling location data from pincode inputs.</p>
-                        <div class="medium-cta">
-                            <a href="https://samir00.medium.com/storing-pincode-data-exploring-the-best-approach-0664ee6abc7e" target="_blank" class="read-more">
-                                Read on Medium <i class="fab fa-medium"></i>
-                            </a>
+                <div class="card blog-card">
+                    <img src="https://miro.medium.com/v2/resize:fill:400:200/1*lcg6m4pesArcKnwE2y6Z6A.png" alt="SDKs" class="card-image">
+                    <div class="card-body">
+                        <div class="blog-meta">
+                            <span>Jun 21, 2024</span>
+                            <span class="system-label" style="margin: 0;">ARCHITECTURE</span>
                         </div>
+                        <h3 class="card-title mb-2"><a href="https://samir00.medium.com/understanding-sdks-enhancing-data-privacy-and-user-experience-beyond-apis-ea7af1422966" target="_blank">Understanding SDKs vs APIs</a></h3>
+                        <p>Discusses why and how SDKs offer better UX and privacy compared to APIs.</p>
                     </div>
-                </div>
-
-                <!-- Article 4 -->
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="https://miro.medium.com/v2/resize:fill:160:106/1*D8r2MX0lKGezIV2ntZtTnA.png" alt="Verify Webhooks" class="article-image">
-                    </div>
-                    <div class="blog-content">
-                        <p class="blog-date">Dec 22, 2024</p>
-                        <h3 class="blog-title">𝐇𝐨𝐰 𝐭𝐨 𝐕𝐞𝐫𝐢𝐟𝐲 𝐖𝐞𝐛𝐡𝐨𝐨𝐤𝐬 𝐨𝐫 𝐕𝐚𝐥𝐢𝐝𝐚𝐭𝐞 𝐓𝐡𝐞𝐲 𝐀𝐫𝐞 𝐂𝐨𝐦𝐢𝐧𝐠…</h3>
-                        <p class="blog-excerpt">Explains webhook validation with IP whitelisting and signature methods.</p>
-                        <div class="medium-cta">
-                            <a href="https://samir00.medium.com/-5bc8c826b515" target="_blank" class="read-more">
-                                Read on Medium <i class="fab fa-medium"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Article 5 -->
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="https://miro.medium.com/v2/resize:fill:160:106/1*lcg6m4pesArcKnwE2y6Z6A.png" alt="Understanding SDKs" class="article-image">
-                    </div>
-                    <div class="blog-content">
-                        <p class="blog-date">Jun 21, 2024 <span class="claps">• 3 claps</span></p>
-                        <h3 class="blog-title">Understanding SDKs: Enhancing Data Privacy and User Experience Beyond APIs</h3>
-                        <p class="blog-excerpt">Discusses why and how SDKs offer better UX and privacy compared to APIs.</p>
-                        <div class="medium-cta">
-                            <a href="https://samir00.medium.com/understanding-sdks-enhancing-data-privacy-and-user-experience-beyond-apis-ea7af1422966" target="_blank" class="read-more">
-                                Read on Medium <i class="fab fa-medium"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Article 6 -->
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="https://miro.medium.com/v2/da:true/resize:fill:160:106/0*RKdvnVoztGInrhX6" alt="GitHub Images" class="article-image">
-                    </div>
-                    <div class="blog-content">
-                        <p class="blog-date">Jun 19, 2024</p>
-                        <h3 class="blog-title">What Happens to Your Uploaded Images on GitHub When You Remove the URL?</h3>
-                        <p class="blog-excerpt">A look at GitHub's storage policy for orphaned image uploads.</p>
-                        <div class="medium-cta">
-                            <a href="https://samir00.medium.com/what-happens-to-your-uploaded-images-on-github-when-you-remove-the-url-dee55fc06949" target="_blank" class="read-more">
-                                Read on Medium <i class="fab fa-medium"></i>
-                            </a>
-                        </div>
+                    <div class="card-footer" style="background-color: transparent;">
+                        <a href="https://samir00.medium.com/understanding-sdks-enhancing-data-privacy-and-user-experience-beyond-apis-ea7af1422966" target="_blank" class="read-link">
+                            Read Post <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="https://medium.com/@samir00" target="_blank" class="btn">View All Articles on Medium</a>
+            <div class="text-center mt-2" style="margin-top: 40px;">
+                <a href="https://medium.com/@samir00" target="_blank" class="btn">View All Articles</a>
             </div>
         </div>
     </section>
 
     <section id="resume">
         <div class="container">
-            <h2 class="section-title">Resume</h2>
-            <div class="resume-container">
-                <div class="resume-download">
-                    <a href="https://drive.google.com/file/d/1qUeEF2elDLRtwq7IhMusXgoAXYwep6tu/preview" download class="btn">Download Resume</a>
-                </div>
-                <p>You can download my resume using the button above or view it below:</p>
-                <iframe src="https://drive.google.com/file/d/1qUeEF2elDLRtwq7IhMusXgoAXYwep6tu/preview" class="resume-preview"></iframe>
+            <h2 class="section-label">05_Resume</h2>
+            <div class="resume-wrapper">
+                <a href="https://drive.google.com/file/d/1qUeEF2elDLRtwq7IhMusXgoAXYwep6tu/preview" download class="btn btn-primary">Download PDF</a>
+                <iframe src="https://drive.google.com/file/d/1qUeEF2elDLRtwq7IhMusXgoAXYwep6tu/preview" class="resume-iframe"></iframe>
             </div>
         </div>
     </section>
 
     <section id="contact">
         <div class="container">
-            <h2 class="section-title">Contact Me</h2>
-            <div class="contact-container">
+            <h2 class="section-label">06_Contact</h2>
+            <div class="contact-grid">
                 <div class="contact-info">
                     <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h3>Email</h3>
-                            <p><a href="mailto:samirspatil742099@gmail.com">samirspatil742099@gmail.com</a></p>
-                        </div>
+                        <span class="contact-label">Email Address</span>
+                        <a href="mailto:samirspatil742099@gmail.com" class="contact-value">samirspatil742099@gmail.com</a>
                     </div>
                     <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h3>Location</h3>
-                            <p>India</p>
-                        </div>
+                        <span class="contact-label">Location Base</span>
+                        <span class="contact-value">India</span>
                     </div>
-                    <h3>Connect with me</h3>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/in/sampatil1010/" target="_blank" class="social-link">
+                    <div class="social-grid">
+                        <a href="https://www.linkedin.com/in/sampatil1010/" target="_blank" class="social-link" title="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="https://github.com/samirpatil2000" target="_blank" class="social-link">
+                        <a href="https://github.com/samirpatil2000" target="_blank" class="social-link" title="GitHub">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="https://twitter.com/sampatil1010" target="_blank" class="social-link">
+                        <a href="https://twitter.com/sampatil1010" target="_blank" class="social-link" title="Twitter">
                             <i class="fab fa-twitter"></i>
                         </a>
                     </div>
                 </div>
-                <div>
+                <div class="contact-message panel">
                     <p>Feel free to reach out to me for any opportunities, collaborations, or just to say hello! I'm always open to discussing new projects and ideas.</p>
                 </div>
             </div>
@@ -373,16 +340,12 @@
     <footer>
         <div class="container">
             <div class="footer-content">
+                <span>&copy; 2024 SAMIR PATIL. SYSTEM ONLINE.</span>
                 <div class="footer-links">
                     <a href="#hero">Home</a>
-                    <a href="#about">About</a>
                     <a href="#experience">Experience</a>
                     <a href="#projects">Projects</a>
-                    <a href="#blog">Blog</a>
-                    <a href="#resume">Resume</a>
-                    <a href="#contact">Contact</a>
                 </div>
-                <p class="copyright">&copy; 2024 Samir Patil. All Rights Reserved.</p>
             </div>
         </div>
     </footer>

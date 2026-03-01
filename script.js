@@ -1,33 +1,3 @@
-// Theme Toggle
-const themeToggle = document.getElementById('theme-toggle');
-const body = document.body;
-const icon = themeToggle.querySelector('i');
-
-// Check for saved theme preference or use default
-const savedTheme = localStorage.getItem('theme') || 'light';
-body.classList.add(`${savedTheme}-mode`);
-updateIcon(savedTheme);
-
-themeToggle.addEventListener('click', () => {
-    if (body.classList.contains('light-mode')) {
-        body.classList.replace('light-mode', 'dark-mode');
-        localStorage.setItem('theme', 'dark');
-        updateIcon('dark');
-    } else {
-        body.classList.replace('dark-mode', 'light-mode');
-        localStorage.setItem('theme', 'light');
-        updateIcon('light');
-    }
-});
-
-function updateIcon(theme) {
-    if (theme === 'dark') {
-        icon.classList.replace('fa-moon', 'fa-sun');
-    } else {
-        icon.classList.replace('fa-sun', 'fa-moon');
-    }
-}
-
 // Mobile Menu Toggle
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 const navLinks = document.querySelector('.nav-links');
@@ -47,7 +17,9 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
         navLinks.classList.remove('active');
         const icon = mobileMenuBtn.querySelector('i');
-        icon.classList.replace('fa-times', 'fa-bars');
+        if(icon) {
+            icon.classList.replace('fa-times', 'fa-bars');
+        }
     });
 });
 
@@ -70,22 +42,68 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Animate elements when they come into view
-const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-};
+// Active Navigation Link Update on Scroll
+const sections = document.querySelectorAll('section');
+const navItems = document.querySelectorAll('.nav-links a');
 
-const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('animate');
-            observer.unobserve(entry.target);
+window.addEventListener('scroll', () => {
+    let current = '';
+    const headerHeight = document.querySelector('header').offsetHeight;
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - headerHeight - 100; // offset
+        if (pageYOffset >= sectionTop) {
+            current = section.getAttribute('id');
         }
     });
-}, observerOptions);
 
-document.querySelectorAll('.timeline-item, .project-card, .blog-card').forEach(item => {
-    observer.observe(item);
+    navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('href').substring(1) === current) {
+            item.classList.add('active');
+        }
+    });
+});
+
+
+// Intersection Observer for Statistics Counter Animation
+const formatNumber = (num) => {
+    return num + "+";
+};
+
+const animateValue = (obj, start, end, duration) => {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = formatNumber(Math.floor(progress * (end - start) + start));
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        } else {
+            obj.innerHTML = formatNumber(end); // force exact end
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
+const statsObserverOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5
+};
+
+const statsObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const target = parseInt(entry.target.getAttribute('data-target'));
+            if (target && !entry.target.classList.contains('animated')) {
+                animateValue(entry.target, 0, target, 2000);
+                entry.target.classList.add('animated');
+            }
+        }
+    });
+}, statsObserverOptions);
+
+document.querySelectorAll('.stat-value').forEach(item => {
+    statsObserver.observe(item);
 });
