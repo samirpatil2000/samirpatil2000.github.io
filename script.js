@@ -107,3 +107,58 @@ const statsObserver = new IntersectionObserver((entries, observer) => {
 document.querySelectorAll('.stat-value').forEach(item => {
     statsObserver.observe(item);
 });
+
+
+
+// API Fetching for Medium Articles
+async function fetchMediumArticles() {
+    const container = document.getElementById('medium-articles-container');
+    if (!container) return;
+    
+    try {
+        const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@samir00');
+        const data = await response.json();
+        const items = data.items.slice(0, 6);
+        
+        container.innerHTML = ''; // clear loading state
+        
+        items.forEach(item => {
+            // Extract a short description snippet from content
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = item.description;
+            const textContent = tempDiv.textContent || tempDiv.innerText || "";
+            const snippet = textContent.slice(0, 100).trim() + '...';
+            
+            const category = item.categories && item.categories.length > 0 
+                ? item.categories[0].toUpperCase() 
+                : 'ARTICLE';
+
+            const cardHTML = `
+                <div class="card blog-card">
+                    <div class="card-body">
+                        <div class="blog-meta">
+                            <span class="system-label" style="margin: 0;">${category}</span>
+                        </div>
+                        <h3 class="card-title mb-2"><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                        <p>${snippet}</p>
+                    </div>
+                    <div class="card-footer" style="background-color: transparent;">
+                        <a href="${item.link}" target="_blank" class="read-link">
+                            Read Post <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += cardHTML;
+        });
+    } catch (error) {
+        console.error('Error fetching Medium articles:', error);
+        container.innerHTML = '<p class="system-label" style="grid-column: 1 / -1; text-align: center; color: var(--color-danger);">ERR_FETCH_MEDIUM</p>';
+    }
+}
+
+// Initialize fetch pipelines
+document.addEventListener('DOMContentLoaded', () => {
+    fetchMediumArticles();
+});
+

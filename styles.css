@@ -1,10 +1,10 @@
 :root {
-    /* Greyscale + Green Accent Palette */
+    /* Greyscale + Grey Accent Palette */
     --bg-main: #F0F0F0;
     --bg-card: #FFFFFF;
     --text-primary: #1A1A1A;
     --text-secondary: #9A9A9A;
-    --accent-green: #2ECC71;
+    --accent-grey: #808080;
     --border-color: #DCDCDC;
     --status-red: #D64545;
     
@@ -93,8 +93,8 @@ nav {
 }
 
 .logo:hover {
-    border-color: var(--accent-green);
-    color: var(--accent-green);
+    border-color: var(--accent-grey);
+    color: var(--accent-grey);
 }
 
 .nav-links {
@@ -128,8 +128,8 @@ nav {
 }
 
 .mobile-menu-btn:hover {
-    border-color: var(--accent-green);
-    color: var(--accent-green);
+    border-color: var(--accent-grey);
+    color: var(--accent-grey);
 }
 
 /* Layout Blocks */
@@ -165,14 +165,14 @@ nav {
 }
 
 .btn-primary {
-    background-color: var(--accent-green);
-    border-color: var(--accent-green);
+    background-color: var(--accent-grey);
+    border-color: var(--accent-grey);
     color: var(--bg-main);
 }
 
 .btn-primary:hover {
     background-color: transparent;
-    color: var(--accent-green);
+    color: var(--accent-grey);
 }
 
 .stat-block {
@@ -280,12 +280,12 @@ section {
 
 .philosophy-box {
     margin-top: 24px;
-    border-left: 2px solid var(--accent-green);
+    border-left: 2px solid var(--accent-grey);
     padding-left: 24px;
 }
 
 .philosophy-box .system-label {
-    color: var(--accent-green);
+    color: var(--accent-grey);
 }
 
 .skills-panel {
@@ -306,8 +306,8 @@ section {
 }
 
 .skill-tag:hover {
-    border-color: var(--accent-green);
-    color: var(--accent-green);
+    border-color: var(--accent-grey);
+    color: var(--accent-grey);
 }
 
 /* Experience Section */
@@ -350,7 +350,7 @@ section {
 }
 
 .timeline-company {
-    color: var(--accent-green);
+    color: var(--accent-grey);
     font-size: 0.9rem;
 }
 
@@ -392,7 +392,7 @@ section {
 }
 
 .card-title a:hover {
-    color: var(--accent-green);
+    color: var(--accent-grey);
 }
 
 .card-body {
@@ -462,7 +462,7 @@ section {
 }
 
 .read-link:hover {
-    color: var(--accent-green);
+    color: var(--accent-grey);
 }
 
 /* Resume Section */
@@ -519,7 +519,7 @@ section {
 }
 
 .contact-value:hover {
-    color: var(--accent-green);
+    color: var(--accent-grey);
 }
 
 .social-grid {
@@ -542,8 +542,8 @@ section {
 }
 
 .social-link:hover {
-    border-color: var(--accent-green);
-    color: var(--accent-green);
+    border-color: var(--accent-grey);
+    color: var(--accent-grey);
 }
 
 .contact-message {
