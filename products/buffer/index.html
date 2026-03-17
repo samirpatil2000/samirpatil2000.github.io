@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buffer — Clipboard Manager for macOS</title>
+  <meta name="description" content="A lightweight, privacy-focused clipboard manager for macOS with searchable history and a quick ⇧⌘V shortcut." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg2: #f7f7f5;
+      --border: rgba(0,0,0,0.08);
+      --border-mid: rgba(0,0,0,0.12);
+      --accent-blue: #0057ff;
+      --text: #111111;
+      --muted: #888888;
+      --muted2: #cccccc;
+      --font-sans: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 40px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    .nav-logo-name {
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--bg2); }
+    .nav-cta {
+      background: var(--text) !important;
+      color: #fff !important;
+      font-weight: 600 !important;
+      padding: 8px 18px !important;
+      border-radius: 10px !important;
+    }
+    .nav-cta:hover { opacity: 0.8; background: var(--text) !important; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 40px 80px;
+      text-align: center;
+      position: relative;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, #d8d8d8 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 10%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 10%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hero-app-icon {
+      width: 96px; height: 96px;
+      border-radius: 22px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.06);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fade-up 0.6s 0.1s ease forwards;
+      object-fit: contain;
+      background: #fff;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--bg2);
+      border: 1px solid var(--border-mid);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fade-up 0.6s 0.18s ease forwards;
+      position: relative;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 2px rgba(34,197,94,0.25);
+    }
+    .hero-title {
+      font-size: clamp(44px, 7vw, 78px);
+      font-weight: 700;
+      letter-spacing: -2.5px;
+      line-height: 1.04;
+      color: var(--text);
+      margin-bottom: 20px;
+      max-width: 680px;
+      opacity: 0;
+      animation: fade-up 0.6s 0.22s ease forwards;
+      position: relative;
+    }
+    .hero-title .blue { color: var(--accent-blue); }
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 440px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+      font-weight: 400;
+      opacity: 0;
+      animation: fade-up 0.6s 0.3s ease forwards;
+      position: relative;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fade-up 0.6s 0.38s ease forwards;
+      position: relative;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--text);
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 13px 26px;
+      border-radius: 12px;
+      text-decoration: none;
+      letter-spacing: -0.2px;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.14);
+    }
+    .btn-primary:hover { opacity: 0.82; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 13px 22px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 1px solid var(--border-mid);
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: var(--bg2); }
+    .hero-shortcut {
+      margin-top: 52px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      opacity: 0;
+      animation: fade-up 0.6s 0.46s ease forwards;
+      position: relative;
+    }
+    .shortcut-label { font-size: 13px; color: var(--muted); }
+    .kbd-row { display: flex; gap: 4px; align-items: center; }
+    kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border: 1px solid var(--border-mid);
+      border-bottom: 2px solid var(--muted2);
+      border-radius: 6px;
+      padding: 4px 9px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+      min-width: 28px;
+    }
+
+    /* APP WINDOW */
+    #screenshot {
+      padding: 0 40px 100px;
+      display: flex;
+      justify-content: center;
+    }
+    .app-window {
+      width: 100%;
+      max-width: 820px;
+      border-radius: 14px;
+      border: 1px solid var(--border-mid);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 20px 60px rgba(0,0,0,0.1), 0 60px 120px rgba(0,0,0,0.05);
+      overflow: hidden;
+      background: #fff;
+      opacity: 0;
+      animation: fade-up 0.8s 0.52s ease forwards;
+      display: block;
+      height: auto;
+    }
+    .window-bar {
+      background: #f5f5f5;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #28ca41; }
+    .window-title {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      font-weight: 500;
+    }
+    .window-content {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      min-height: 320px;
+    }
+    .win-list {
+      border-right: 1px solid var(--border);
+      padding: 10px 8px;
+      background: #fafafa;
+    }
+    .win-search {
+      margin-bottom: 8px;
+      background: #fff;
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #aaa;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .win-item {
+      padding: 9px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #888;
+      line-height: 1.4;
+      cursor: default;
+    }
+    .win-item.active {
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      color: var(--text);
+    }
+    .win-item-label {
+      font-size: 10px;
+      color: var(--accent-blue);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .win-item-text {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .win-preview { padding: 20px 24px; }
+    .win-preview-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .win-preview-code {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.8;
+      color: var(--text);
+      background: var(--bg2);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .code-blue { color: var(--accent-blue); }
+    .code-gray { color: var(--muted); }
+
+    /* FEATURES */
+    #features {
+      padding: 100px 40px;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 52px;
+    }
+    .section-title em { font-style: normal; color: var(--muted); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border-mid);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .feature-card {
+      background: var(--bg);
+      padding: 30px 28px;
+      transition: background 0.2s;
+    }
+    .feature-card:hover { background: var(--bg2); }
+    .feature-icon { font-size: 22px; margin-bottom: 14px; }
+    .feature-name { font-size: 15px; font-weight: 600; margin-bottom: 7px; letter-spacing: -0.2px; }
+    .feature-desc { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+
+    /* SHORTCUTS */
+    #shortcuts {
+      padding: 80px 40px;
+      max-width: 660px;
+      margin: 0 auto;
+    }
+    .shortcuts-card {
+      border: 1px solid var(--border-mid);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .shortcuts-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 22px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+    .shortcuts-row:last-child { border-bottom: none; }
+    .shortcuts-row:hover { background: var(--bg2); }
+    .shortcut-action { font-size: 13.5px; color: var(--text); }
+    .shortcut-keys { display: flex; gap: 4px; align-items: center; }
+
+    /* INSTALL */
+    #install {
+      padding: 80px 40px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .install-card {
+      background: var(--bg2);
+      border: 1px solid var(--border-mid);
+      border-radius: 16px;
+      padding: 36px 40px;
+    }
+    .step {
+      display: flex;
+      gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step:last-of-type { border-bottom: none; }
+    .step-num {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-text { font-size: 14px; line-height: 1.65; }
+    .step-text code {
+      background: #fff;
+      border: 1px solid var(--border-mid);
+      border-radius: 5px;
+      padding: 1px 7px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--accent-blue);
+    }
+    .note-box {
+      margin-top: 22px;
+      background: #fff8ed;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #78350f;
+      line-height: 1.65;
+    }
+    .note-box strong { color: #92400e; }
+
+    /* DOWNLOAD CTA */
+    #download {
+      padding: 100px 40px 120px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .download-logo {
+      width: 72px; height: 72px;
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      margin: 0 auto 24px;
+      display: block;
+      object-fit: contain;
+      background: #fff;
+    }
+    .download-title {
+      font-size: clamp(30px, 4.5vw, 52px);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .download-sub { font-size: 15px; color: var(--muted); margin-bottom: 36px; }
+    .download-meta {
+      margin-top: 22px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .meta-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .meta-badge::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--muted2);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 10px;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: var(--text); }
+    .footer-links { display: flex; gap: 18px; }
+    .footer-left { display: flex; align-items: center; gap: 8px; }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 760px) {
+      nav { padding: 0 20px; }
+      .nav-links li:not(:last-child) { display: none; }
+      #hero { padding: 100px 24px 60px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .window-content { grid-template-columns: 1fr; }
+      .win-list { display: none; }
+      #features, #shortcuts, #install { padding-left: 24px; padding-right: 24px; }
+      .install-card { padding: 24px 20px; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">
+    <img src="https://raw.githubusercontent.com/samirpatil2000/Buffer/main/Assets/Buffer-Logo.png" alt="Buffer" />
+    <span class="nav-logo-name">Buffer</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#shortcuts">Shortcuts</a></li>
+    <li><a href="#install">Install</a></li>
+    <li><a href="https://github.com/samirpatil2000/Buffer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://github.com/samirpatil2000/Buffer/releases/download/buffer-v1.4/Buffer.dmg" class="nav-cta">Download</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <img
+    src="https://raw.githubusercontent.com/samirpatil2000/Buffer/main/Assets/Buffer-Logo.png"
+    alt="Buffer App Icon"
+    class="hero-app-icon"
+  />
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    v1.4 — Vision OCR & Precision Polish
+  </div>
+  <h1 class="hero-title">
+    Clipboard history,<br><span class="blue">always at hand.</span>
+  </h1>
+  <p class="hero-sub">
+    A lightweight, privacy-first clipboard manager for macOS. Searchable history, image support, and on-device OCR — everything stays on your Mac.
+  </p>
+  <div class="hero-actions">
+    <a href="https://github.com/samirpatil2000/Buffer/releases/download/buffer-v1.4/Buffer.dmg" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download — Free
+    </a>
+    <a href="https://github.com/samirpatil2000/Buffer" target="_blank" class="btn-secondary">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      View Source
+    </a>
+  </div>
+  <div class="hero-shortcut">
+    <span class="shortcut-label">Open anywhere with</span>
+    <div class="kbd-row">
+      <kbd>⇧</kbd><kbd>⌘</kbd><kbd>V</kbd>
+    </div>
+  </div>
+</section>
+
+<section id="screenshot">
+  <img src="../../assests/buffer-home.png" alt="Buffer Screenshot" class="app-window" />
+</section>
+
+<section id="features">
+  <div class="section-eyebrow">Features</div>
+  <h2 class="section-title">Everything you need,<br><em>nothing you don't.</em></h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <div class="feature-name">Clipboard History</div>
+      <p class="feature-desc">Auto-captures everything you copy — text and images — so you never lose a snippet again.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <div class="feature-name">Instant Search</div>
+      <p class="feature-desc">Real-time fuzzy search across your entire history. Find anything in milliseconds.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👁</div>
+      <div class="feature-name">Vision OCR</div>
+      <p class="feature-desc">Extract text from images using Apple's on-device Vision framework. Fully offline and private.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🖼️</div>
+      <div class="feature-name">Image Support</div>
+      <p class="feature-desc">Copy and paste images seamlessly with inline preview before pasting.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📌</div>
+      <div class="feature-name">Menu Bar App</div>
+      <p class="feature-desc">Lives quietly in your menu bar. No Dock clutter, always a hotkey away.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-name">Privacy First</div>
+      <p class="feature-desc">All data stored locally. Nothing ever leaves your Mac. No accounts, no cloud.</p>
+    </div>
+  </div>
+</section>
+
+<section id="shortcuts">
+  <div class="section-eyebrow">Keyboard</div>
+  <h2 class="section-title">Built for<br><em>keyboard people.</em></h2>
+  <div class="shortcuts-card">
+    <div class="shortcuts-row">
+      <span class="shortcut-action">Open clipboard history</span>
+      <div class="shortcut-keys"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>V</kbd></div>
+    </div>
+    <div class="shortcuts-row">
+      <span class="shortcut-action">Navigate items</span>
+      <div class="shortcut-keys"><kbd>↑</kbd><kbd>↓</kbd></div>
+    </div>
+    <div class="shortcuts-row">
+      <span class="shortcut-action">Paste selected item</span>
+      <div class="shortcut-keys"><kbd>↵</kbd></div>
+    </div>
+    <div class="shortcuts-row">
+      <span class="shortcut-action">Close history window</span>
+      <div class="shortcut-keys"><kbd>⎋</kbd></div>
+    </div>
+    <div class="shortcuts-row">
+      <span class="shortcut-action">Bookmark item</span>
+      <div class="shortcut-keys"><kbd>⌘</kbd><kbd>B</kbd></div>
+    </div>
+    <div class="shortcuts-row">
+      <span class="shortcut-action">Run OCR on image</span>
+      <div class="shortcut-keys"><kbd>⌘</kbd><kbd>T</kbd></div>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="section-eyebrow">Getting Started</div>
+  <h2 class="section-title">Up in <em>60 seconds.</em></h2>
+  <div class="install-card">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Download <code>Buffer.dmg</code> using the button at the top or bottom of this page.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">Open the DMG and drag <code>Buffer.app</code> into your Applications folder.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">Launch Buffer — it appears in your menu bar. Grant Accessibility permissions when prompted.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">Start copying as usual. Press <code>⇧⌘V</code> anywhere to pull up your clipboard history.</div>
+    </div>
+    <div class="note-box">
+      <strong>⚠️ Note:</strong> Buffer is not notarized with an Apple Developer ID. On first launch, right-click the app → <strong>Open</strong> → click <strong>Open</strong> in the security dialog. This is a one-time step.
+    </div>
+  </div>
+</section>
+
+<section id="download">
+  <img
+    src="https://raw.githubusercontent.com/samirpatil2000/Buffer/main/Assets/Buffer-Logo.png"
+    alt="Buffer"
+    class="download-logo"
+  />
+  <h2 class="download-title">Your clipboard,<br>supercharged.</h2>
+  <p class="download-sub">Free and open-source. Always.</p>
+  <a href="https://github.com/samirpatil2000/Buffer/releases/download/buffer-v1.4/Buffer.dmg" class="btn-primary" style="font-size:16px; padding:15px 32px;">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Download Buffer.dmg — v1.4
+  </a>
+  <div class="download-meta">
+    <span class="meta-badge">macOS 13.0+</span>
+    <span class="meta-badge">Apple Silicon & Intel</span>
+    <span class="meta-badge">Free & Open Source</span>
+    <span class="meta-badge">MIT License</span>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">
+    <img src="https://raw.githubusercontent.com/samirpatil2000/Buffer/main/Assets/Buffer-Logo.png" alt="" style="width:18px;height:18px;border-radius:4px;object-fit:contain;" />
+    Buffer · Made by <a href="https://samirpatil2000.github.io/" target="_blank">Samir Patil</a>
+  </div>
+  <div class="footer-links">
+    <a href="https://samirpatil2000.github.io/">Portfolio ↗</a>
+    <a href="https://github.com/samirpatil2000/Buffer" target="_blank">GitHub ↗</a>
+    <a href="https://github.com/samirpatil2000/Buffer/releases" target="_blank">Releases ↗</a>
+    <a href="https://github.com/samirpatil2000/Buffer/issues" target="_blank">Report a bug ↗</a>
+  </div>
+</footer>
+
+</body>
+</html>
