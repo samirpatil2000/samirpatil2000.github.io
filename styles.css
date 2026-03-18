@@ -370,7 +370,24 @@ section {
 }
 
 .card:hover {
-    border-color: var(--text-secondary);
+    border-color: var(--border-color);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    transform: translateY(-4px);
+}
+
+.card-indicator {
+    font-size: 0.95rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.card:hover .card-indicator {
+    transform: translateX(4px);
 }
 
 .card-header {
@@ -407,9 +424,9 @@ section {
 }
 
 .card-footer {
-    padding: 16px 24px;
-    border-top: 1px solid var(--border-color);
-    background-color: var(--bg-main);
+    padding: 0 24px 24px 24px;
+    background-color: transparent;
+    border-top: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -422,9 +439,14 @@ section {
 }
 
 .card-tech-tag {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 0.75rem;
+    font-weight: 600;
     color: var(--text-secondary);
+    background: var(--bg-main);
+    padding: 4px 10px;
+    border-radius: 100px;
+    letter-spacing: 0.02em;
 }
 
 /* Blog specific */
