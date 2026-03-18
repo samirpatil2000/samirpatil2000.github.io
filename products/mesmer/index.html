@@ -137,13 +137,27 @@
       animation: appear 1s 0.1s ease forwards;
     }
 
-    .hero-eyebrow {
-      font-size: 17px;
-      font-weight: 400;
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
       color: var(--muted);
-      margin-bottom: 12px;
+      margin-bottom: 24px;
       opacity: 0;
       animation: appear 1s 0.25s ease forwards;
+      position: relative;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #30d158;
+      box-shadow: 0 0 0 2px rgba(48,209,88,0.25);
     }
 
     .hero-headline {
@@ -700,7 +714,10 @@
     class="hero-logo"
   />
 
-  <p class="hero-eyebrow">Native macOS · On-Device AI</p>
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Free &amp; Open Source
+  </div>
 
   <h1 class="hero-headline">
     Your voice.<br>Transformed.
