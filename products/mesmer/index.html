@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mesmer — Dictation & AI Writing for macOS</title>
+  <meta name="description" content="Native, on-device dictation and AI text-rewriting for macOS. Speak. Select. Transform." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Apple system font stack — no exotic choices, just perfect execution -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:   #ffffff;
+      --off:     #f5f5f7;
+      --border:  rgba(0,0,0,0.08);
+      --text:    #1d1d1f;
+      --muted:   #6e6e73;
+      --light:   #aeaeb2;
+      --blue:    #0071e3;
+      --blue-h:  #0077ed;
+      --font: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 17px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 400;
+      padding: 0 14px;
+      opacity: 0.8;
+      transition: opacity 0.15s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-download {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--blue);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .nav-download:hover { opacity: 0.8; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 22px 80px;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, #d8d8d8 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 10%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 10%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* The one visual element: a live wave behind the headline */
+    #hero-canvas {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 400px;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .hero-logo {
+      height: 80px;
+      width: auto;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: appear 1s 0.1s ease forwards;
+    }
+
+    .hero-eyebrow {
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--muted);
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: appear 1s 0.25s ease forwards;
+    }
+
+    .hero-headline {
+      font-size: clamp(48px, 7vw, 80px);
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: appear 1s 0.35s ease forwards;
+    }
+
+    .hero-sub {
+      font-size: clamp(17px, 2vw, 21px);
+      font-weight: 400;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: appear 1s 0.45s ease forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: appear 1s 0.55s ease forwards;
+    }
+
+    .btn-blue {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 400;
+      padding: 12px 24px;
+      border-radius: 980px;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-blue:hover { background: var(--blue-h); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      color: var(--blue);
+      font-size: 17px;
+      font-weight: 400;
+      padding: 12px 24px;
+      border-radius: 980px;
+      text-decoration: none;
+      border: 1px solid rgba(0,113,227,0.3);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--blue);
+      background: rgba(0,113,227,0.04);
+    }
+
+    .hero-meta {
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--light);
+      opacity: 0;
+      animation: appear 1s 0.65s ease forwards;
+    }
+
+    /* ── WAVE BARS ── */
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      margin-top: 60px;
+      height: 32px;
+      opacity: 0;
+      animation: appear 1s 0.7s ease forwards;
+      position: relative;
+      z-index: 1;
+    }
+    .wb {
+      width: 2px;
+      border-radius: 1px;
+      background: var(--muted);
+      opacity: 0.25;
+      animation: wb-pulse var(--d, 1.2s) ease-in-out infinite alternate;
+      animation-delay: var(--dl, 0s);
+    }
+    @keyframes wb-pulse {
+      from { height: 3px; opacity: 0.15; }
+      to   { height: var(--h, 20px); opacity: 0.4; }
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── SECTION SHELL ── */
+    .section {
+      padding: 100px 22px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .section-center { text-align: center; }
+
+    .section-tag {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+    .section-headline {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      line-height: 1.08;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+    .section-center .section-sub { margin: 0 auto; }
+
+    /* ── TOOLBAR DEMO ── */
+    #demo {
+      background: var(--off);
+      padding: 80px 22px;
+      text-align: center;
+    }
+    .demo-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .demo-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 980px;
+      padding: 6px 16px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .demo-pill-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #30d158;
+      animation: dot-breathe 2s ease-in-out infinite;
+    }
+    @keyframes dot-breathe {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+    .demo-context-text {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .demo-selected {
+      display: inline;
+      background: rgba(0,113,227,0.12);
+      border-radius: 3px;
+      color: var(--text);
+      padding: 0 3px;
+    }
+    .toolbar {
+      display: inline-flex;
+      align-items: center;
+      gap: 1px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 6px 8px;
+      box-shadow:
+        0 2px 8px rgba(0,0,0,0.06),
+        0 12px 32px rgba(0,0,0,0.08);
+    }
+    .tb-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text);
+      cursor: default;
+      white-space: nowrap;
+      transition: background 0.12s;
+    }
+    .tb-btn:hover { background: var(--off); }
+    .tb-btn.active {
+      background: var(--blue);
+      color: #fff;
+    }
+    .tb-sep {
+      width: 1px; height: 22px;
+      background: var(--border);
+      margin: 0 3px;
+      flex-shrink: 0;
+    }
+    .tb-mic-btn {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 2px;
+      flex-shrink: 0;
+    }
+    .demo-caption {
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--light);
+    }
+
+    /* ── FEATURES GRID ── */
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      margin-top: 64px;
+      border: 1px solid var(--border);
+    }
+    .feat-cell {
+      background: var(--white);
+      padding: 40px 32px;
+      transition: background 0.2s;
+    }
+    .feat-cell:hover { background: var(--off); }
+    .feat-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .feat-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: -0.2px;
+    }
+    .feat-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── HOW IT WORKS ── */
+    #how { background: var(--off); }
+    .how-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 100px 22px;
+    }
+    .step-list {
+      margin-top: 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .step-row {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 24px;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      align-items: start;
+    }
+    .step-row:last-child { border-bottom: 1px solid var(--border); }
+    .step-n {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      padding-top: 3px;
+    }
+    .step-title {
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: -0.2px;
+    }
+    .step-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .step-desc code {
+      background: rgba(0,0,0,0.05);
+      border-radius: 5px;
+      padding: 1px 6px;
+      font-family: 'SF Mono', 'Menlo', monospace;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    /* ── PERSONAS ── */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 64px;
+    }
+    .persona-card {
+      background: var(--off);
+      border-radius: 18px;
+      padding: 32px 28px;
+      transition: background 0.2s;
+    }
+    .persona-card:hover { background: #ebebed; }
+    .persona-card.wide { grid-column: 1 / -1; }
+    .persona-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+    .persona-name {
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
+    .persona-eg {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-style: italic;
+    }
+
+
+
+    /* ── REQUIREMENTS ── */
+    .req-list {
+      margin-top: 56px;
+      display: flex;
+      flex-direction: column;
+    }
+    .req-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+    }
+    .req-row:last-child { border-bottom: 1px solid var(--border); }
+    .req-icon { font-size: 22px; flex-shrink: 0; line-height: 1; padding-top: 2px; }
+    .req-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .req-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── BUILD ── */
+    #build { background: var(--off); }
+    .build-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 100px 22px;
+      text-align: center;
+    }
+    .code-window {
+      margin-top: 40px;
+      background: #1c1c1e;
+      border-radius: 14px;
+      overflow: hidden;
+      text-align: left;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .code-title-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 16px;
+      background: #2c2c2e;
+    }
+    .cdot { width: 12px; height: 12px; border-radius: 50%; }
+    .cdot-r { background: #ff5f57; }
+    .cdot-y { background: #febc2e; }
+    .cdot-g { background: #28c840; }
+    .code-title { flex: 1; text-align: center; font-size: 11px; color: #636366; font-family: 'SF Mono','Menlo',monospace; }
+    .code-body {
+      padding: 24px 22px;
+      font-family: 'SF Mono', 'Menlo', monospace;
+      font-size: 13px;
+      line-height: 1.9;
+      color: #ebebf5cc;
+    }
+    .code-comment { color: #636366; }
+    .code-cmd { color: #64d2ff; }
+    .code-arg { color: #30d158; }
+    .code-url { color: #ff9f0a; }
+    .build-note {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      padding: 16px 20px;
+      background: rgba(255,149,0,0.06);
+      border-radius: 10px;
+      border: 1px solid rgba(255,149,0,0.15);
+      text-align: left;
+    }
+    .build-note code {
+      font-family: 'SF Mono','Menlo',monospace;
+      font-size: 12px;
+      background: rgba(0,0,0,0.05);
+      border-radius: 4px;
+      padding: 0 5px;
+    }
+
+    /* ── FINAL CTA ── */
+    #cta {
+      padding: 120px 22px;
+      text-align: center;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    #cta-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.2;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-logo {
+      height: 64px;
+      width: auto;
+      margin: 0 auto 28px;
+      display: block;
+    }
+    .cta-headline {
+      font-size: clamp(40px, 5vw, 64px);
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      line-height: 1.06;
+      margin-bottom: 16px;
+    }
+    .cta-sub {
+      font-size: 19px;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .cta-meta {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--light);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--light);
+      flex-wrap: wrap;
+      gap: 10px;
+      background: var(--white);
+    }
+    footer a { color: var(--light); text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: var(--muted); }
+    .footer-links { display: flex; gap: 20px; }
+
+    /* ── APPEAR ANIMATION ── */
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 734px) {
+      .feat-grid { grid-template-columns: 1fr; }
+      .persona-grid { grid-template-columns: 1fr; }
+      .persona-card.wide { grid-column: auto; }
+      .nav-links { display: none; }
+      .step-row { grid-template-columns: 32px 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <img src="https://raw.githubusercontent.com/samirpatil2000/mesmer/main/Mesmer/Assest/mesmer_app_logo_with_name.svg" alt="Mesmer" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#personas">Personas</a></li>
+    <li><a href="https://github.com/samirpatil2000/mesmer" target="_blank">GitHub</a></li>
+  </ul>
+  <a href="https://github.com/samirpatil2000/mesmer/releases/download/v1.0.0/Mesmer_Release.dmg" class="nav-download">Download ↓</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+
+  <img
+    src="https://raw.githubusercontent.com/samirpatil2000/mesmer/main/Mesmer/Assest/mesmer_app_logo_with_name.svg"
+    alt="Mesmer"
+    class="hero-logo"
+  />
+
+  <p class="hero-eyebrow">Native macOS · On-Device AI</p>
+
+  <h1 class="hero-headline">
+    Your voice.<br>Transformed.
+  </h1>
+
+  <p class="hero-sub">
+    Dictate into any app. Rewrite anything with AI. All private, all on your Mac. Nothing leaves your device.
+  </p>
+
+  <div class="hero-cta">
+    <a href="https://github.com/samirpatil2000/mesmer/releases/download/v1.0.0/Mesmer_Release.dmg" class="btn-blue">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download — Free
+    </a>
+    <a href="https://github.com/samirpatil2000/mesmer" target="_blank" class="btn-outline">View on GitHub</a>
+  </div>
+
+  <p class="hero-meta">v1.0.0 &nbsp;·&nbsp; macOS 26+ &nbsp;·&nbsp; Apple Silicon &amp; Intel</p>
+
+  <!-- voice waveform bars -->
+  <div class="wave-bars">
+    <div class="wb" style="--d:1.1s;--dl:0.00s;--h:5px"></div>
+    <div class="wb" style="--d:0.9s;--dl:0.08s;--h:10px"></div>
+    <div class="wb" style="--d:1.3s;--dl:0.04s;--h:18px"></div>
+    <div class="wb" style="--d:0.8s;--dl:0.12s;--h:24px"></div>
+    <div class="wb" style="--d:1.2s;--dl:0.18s;--h:16px"></div>
+    <div class="wb" style="--d:1.0s;--dl:0.09s;--h:28px"></div>
+    <div class="wb" style="--d:0.7s;--dl:0.02s;--h:22px"></div>
+    <div class="wb" style="--d:1.4s;--dl:0.22s;--h:30px"></div>
+    <div class="wb" style="--d:0.9s;--dl:0.05s;--h:26px"></div>
+    <div class="wb" style="--d:1.1s;--dl:0.14s;--h:20px"></div>
+    <div class="wb" style="--d:0.8s;--dl:0.19s;--h:30px"></div>
+    <div class="wb" style="--d:1.3s;--dl:0.07s;--h:24px"></div>
+    <div class="wb" style="--d:1.0s;--dl:0.26s;--h:28px"></div>
+    <div class="wb" style="--d:0.9s;--dl:0.01s;--h:16px"></div>
+    <div class="wb" style="--d:1.2s;--dl:0.11s;--h:22px"></div>
+    <div class="wb" style="--d:0.7s;--dl:0.20s;--h:18px"></div>
+    <div class="wb" style="--d:1.1s;--dl:0.06s;--h:10px"></div>
+    <div class="wb" style="--d:0.9s;--dl:0.16s;--h:5px"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TOOLBAR DEMO -->
+<section id="demo">
+  <div class="demo-inner">
+    <div class="demo-pill">
+      <span class="demo-pill-dot"></span>
+      Auto-Dictation Active &nbsp;·&nbsp; Fn + Space to toggle
+    </div>
+
+    <p class="demo-context-text">
+      You've selected: <span class="demo-selected">"The meeting is scheduled for tomorrow afternoon"</span>
+    </p>
+
+    <div class="toolbar">
+      <div class="tb-btn active">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        Dictate
+      </div>
+      <div class="tb-sep"></div>
+      <div class="tb-btn">Formal</div>
+      <div class="tb-btn">Concise</div>
+      <div class="tb-btn">Friendly</div>
+      <div class="tb-btn">Custom…</div>
+      <div class="tb-sep"></div>
+      <div class="tb-btn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        History
+      </div>
+      <div class="tb-mic-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+      </div>
+    </div>
+
+    <p class="demo-caption">The floating toolbar · follows you across every app</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section id="features" class="section section-center">
+  <p class="section-tag">Capabilities</p>
+  <h2 class="section-headline">Everything it does.<br>Nothing it doesn't.</h2>
+  <p class="section-sub">Six capabilities. One lightweight app. No cloud required.</p>
+
+  <div class="feat-grid">
+    <div class="feat-cell reveal">
+      <span class="feat-icon">🎙️</span>
+      <div class="feat-name">On-Device Dictation</div>
+      <p class="feat-desc">Apple's Speech framework transcribes your voice with precision. No internet, no servers, no data leaving your Mac.</p>
+    </div>
+    <div class="feat-cell reveal">
+      <span class="feat-icon">✨</span>
+      <div class="feat-name">AI Text Rewriting</div>
+      <p class="feat-desc">Select text in any app and transform it using Apple's FoundationModels. Formal, concise, friendly — or your own instruction.</p>
+    </div>
+    <div class="feat-cell reveal">
+      <span class="feat-icon">🌐</span>
+      <div class="feat-name">Works Everywhere</div>
+      <p class="feat-desc">Via macOS Accessibility APIs, Mesmer works in every app — Slack, Xcode, Notes, Safari, everything.</p>
+    </div>
+    <div class="feat-cell reveal">
+      <span class="feat-icon">⚡</span>
+      <div class="feat-name">Auto-Dictation Mode</div>
+      <p class="feat-desc">Persistent listening without holding a key. Toggle with Fn + Space. A minimal pill UI confirms you're live.</p>
+    </div>
+    <div class="feat-cell reveal">
+      <span class="feat-icon">📜</span>
+      <div class="feat-name">History</div>
+      <p class="feat-desc">Every transcription and rewrite is saved locally. Review and reuse past sessions anytime — privately.</p>
+    </div>
+    <div class="feat-cell reveal">
+      <span class="feat-icon">🔒</span>
+      <div class="feat-name">Complete Privacy</div>
+      <p class="feat-desc">All processing stays on your Mac. No accounts. No telemetry. No cloud. Just your words, staying yours.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="how-inner">
+    <p class="section-tag">How it works</p>
+    <h2 class="section-headline">Two ways to use Mesmer.</h2>
+
+    <div class="step-list">
+      <div class="step-row reveal">
+        <span class="step-n">01</span>
+        <div>
+          <div class="step-title">Dictate into any text field</div>
+          <p class="step-desc">Place your cursor anywhere. Open Mesmer's floating toolbar, tap the mic, and speak. Your words appear exactly where your cursor is — instantly, without copy-paste.</p>
+        </div>
+      </div>
+      <div class="step-row reveal">
+        <span class="step-n">02</span>
+        <div>
+          <div class="step-title">Select → choose a persona → done</div>
+          <p class="step-desc">Highlight any text in any app. Mesmer's toolbar appears. Choose <code>Formal</code>, <code>Concise</code>, <code>Friendly</code>, or enter a <code>Custom</code> instruction. The selected text is replaced with the rewritten version — on-device, in seconds.</p>
+        </div>
+      </div>
+      <div class="step-row reveal">
+        <span class="step-n">03</span>
+        <div>
+          <div class="step-title">Review your history</div>
+          <p class="step-desc">Every session is logged locally. Open History to revisit, copy, or re-inject any past transcription or rewrite.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PERSONAS -->
+<section id="personas" class="section">
+  <p class="section-tag">Rewriting Personas</p>
+  <h2 class="section-headline">One sentence.<br>Four voices.</h2>
+  <p class="section-sub">Choose how your words sound. Mesmer transforms the meaning stays, the tone changes.</p>
+
+  <div class="persona-grid">
+    <div class="persona-card reveal">
+      <div class="persona-label">Formal</div>
+      <div class="persona-name">Professional & precise</div>
+      <p class="persona-eg">"Hey, can we push the meeting?" → "I would like to request a reschedule for our upcoming meeting at your earliest convenience."</p>
+    </div>
+    <div class="persona-card reveal">
+      <div class="persona-label">Concise</div>
+      <div class="persona-name">Short & direct</div>
+      <p class="persona-eg">"I was thinking we could possibly maybe consider looking into this." → "Let's explore this."</p>
+    </div>
+    <div class="persona-card reveal">
+      <div class="persona-label">Friendly</div>
+      <div class="persona-name">Warm & conversational</div>
+      <p class="persona-eg">"Action items remain outstanding." → "Hey, just a heads up — we still have a few things to wrap up!"</p>
+    </div>
+    <div class="persona-card wide reveal">
+      <div class="persona-label">Custom</div>
+      <div class="persona-name">Your instruction, exactly</div>
+      <p class="persona-eg">Type anything. "Translate to Spanish." "Turn this into bullet points." "Make it sound like Hemingway." "Add more technical depth." Mesmer passes your instruction directly to the on-device model.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+
+<!-- REQUIREMENTS -->
+<section id="requirements" class="section">
+  <p class="section-tag">Requirements</p>
+  <h2 class="section-headline">What you need.</h2>
+
+  <div class="req-list">
+    <div class="req-row reveal">
+      <span class="req-icon">🍎</span>
+      <div>
+        <div class="req-title">macOS 26.0 or newer</div>
+        <div class="req-desc">Required for Apple's FoundationModels framework. Dictation works on earlier releases, but AI rewriting requires macOS 26.</div>
+      </div>
+    </div>
+    <div class="req-row reveal">
+      <span class="req-icon">🎤</span>
+      <div>
+        <div class="req-title">Microphone access</div>
+        <div class="req-desc">Granted once on first launch. Audio is processed entirely on-device — never transmitted anywhere.</div>
+      </div>
+    </div>
+    <div class="req-row reveal">
+      <span class="req-icon">♿</span>
+      <div>
+        <div class="req-title">Accessibility permissions</div>
+        <div class="req-desc">Needed to read selected text from other apps and inject transcribed or rewritten content back into them.</div>
+      </div>
+    </div>
+    <div class="req-row reveal">
+      <span class="req-icon">🗣️</span>
+      <div>
+        <div class="req-title">Speech Recognition</div>
+        <div class="req-desc">A one-time permission grant. Used by Apple's native Speech framework for local, private transcription.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BUILD FROM SOURCE -->
+<section id="build">
+  <div class="build-inner">
+    <p class="section-tag">Open Source</p>
+    <h2 class="section-headline">Build it yourself.</h2>
+    <p class="section-sub" style="margin:0 auto 0;color:var(--muted);font-size:17px;">MIT licensed. Run the script, get a DMG.</p>
+
+    <div class="code-window">
+      <div class="code-title-bar">
+        <div class="cdot cdot-r"></div>
+        <div class="cdot cdot-y"></div>
+        <div class="cdot cdot-g"></div>
+        <span class="code-title">build_dmg.sh</span>
+      </div>
+      <div class="code-body">
+        <span class="code-comment"># Clone</span><br>
+        <span class="code-cmd">git</span> <span class="code-arg">clone</span> <span class="code-url">https://github.com/samirpatil2000/mesmer.git</span><br>
+        <span class="code-cmd">cd</span> mesmer<br><br>
+        <span class="code-comment"># Build — outputs Mesmer_Release.dmg</span><br>
+        <span class="code-cmd">./build_dmg.sh</span>
+      </div>
+    </div>
+
+    <div class="build-note">
+      If macOS flags the app on first launch, run: <code>xattr -cr /Applications/Mesmer.app</code>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <canvas id="cta-canvas"></canvas>
+  <div class="cta-inner">
+    <img
+      src="https://raw.githubusercontent.com/samirpatil2000/mesmer/main/Mesmer/Assest/mesmer_app_logo.svg"
+      alt="Mesmer"
+      class="cta-logo"
+    />
+    <h2 class="cta-headline">Speak your mind.<br>Beautifully.</h2>
+    <p class="cta-sub">Free. Open-source. Yours.</p>
+    <div class="hero-cta">
+      <a href="https://github.com/samirpatil2000/mesmer/releases/download/v1.0.0/Mesmer_Release.dmg" class="btn-blue" style="font-size:19px;padding:14px 28px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Mesmer
+      </a>
+    </div>
+    <div class="cta-meta">
+      <span>macOS 26.0+</span>
+      <span>100% On-Device</span>
+      <span>MIT License</span>
+      <span>Free Forever</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Mesmer · Made by <a href="https://samirpatil2000.github.io/" target="_blank">Samir Patil</a></span>
+  <div class="footer-links">
+    <a href="https://samirpatil2000.github.io/">Portfolio</a>
+    <a href="https://github.com/samirpatil2000/mesmer" target="_blank">GitHub</a>
+    <a href="https://github.com/samirpatil2000/mesmer/releases" target="_blank">Releases</a>
+    <a href="https://github.com/samirpatil2000/mesmer/issues" target="_blank">Issues</a>
+  </div>
+</footer>
+
+<script>
+/* ── WAVE ANIMATION (hero + cta) ── */
+function makeWave(id, alpha) {
+  const c = document.getElementById(id);
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let W, H;
+  const resize = () => {
+    const r = c.parentElement.getBoundingClientRect();
+    W = c.width  = r.width;
+    H = c.height = r.height;
+    if (id === 'hero-canvas') { c.style.bottom = '0'; c.style.position = 'absolute'; }
+    else { c.style.position = 'absolute'; c.style.top = '0'; c.style.left = '0'; }
+  };
+  resize();
+  window.addEventListener('resize', resize);
+
+  const waves = [
+    { amp: 35, freq: 0.008, speed: 0.010, phase: 0.0 },
+    { amp: 22, freq: 0.012, speed: 0.016, phase: 2.1 },
+    { amp: 45, freq: 0.005, speed: 0.007, phase: 1.0 },
+  ];
+
+  (function draw() {
+    ctx.clearRect(0, 0, W, H);
+    waves.forEach((w, i) => {
+      w.phase += w.speed;
+      const baseY = H * (0.5 + i * 0.15);
+      ctx.beginPath();
+      for (let x = 0; x <= W; x += 2) {
+        const y = baseY
+          + Math.sin(x * w.freq + w.phase) * w.amp
+          + Math.sin(x * w.freq * 1.8 + w.phase * 0.6) * w.amp * 0.3;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+      const g = ctx.createLinearGradient(0, baseY - w.amp, 0, H);
+      g.addColorStop(0, `rgba(0,113,227,${alpha})`);
+      g.addColorStop(1, 'rgba(0,113,227,0)');
+      ctx.fillStyle = g;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  })();
+}
+
+makeWave('hero-canvas', 0.15);
+makeWave('cta-canvas',  0.10);
+
+/* ── SCROLL REVEAL ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
