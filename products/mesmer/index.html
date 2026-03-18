@@ -42,45 +42,58 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      height: 52px;
+      padding: 0 40px;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 22px;
-      background: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.88);
       backdrop-filter: saturate(180%) blur(20px);
       -webkit-backdrop-filter: saturate(180%) blur(20px);
       border-bottom: 1px solid var(--border);
     }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
     .nav-logo img {
-      height: 24px;
-      width: auto;
-      display: block;
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    .nav-logo-name {
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--text);
+      letter-spacing: -0.3px;
     }
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 0;
+      gap: 4px;
       list-style: none;
     }
     .nav-links a {
-      color: var(--text);
+      color: var(--muted);
       text-decoration: none;
-      font-size: 12px;
-      font-weight: 400;
-      padding: 0 14px;
-      opacity: 0.8;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--off); }
+    .nav-cta {
+      background: var(--text) !important;
+      color: var(--white) !important;
+      font-weight: 600 !important;
+      padding: 8px 18px !important;
+      border-radius: 10px !important;
       transition: opacity 0.15s;
     }
-    .nav-links a:hover { opacity: 1; }
-    .nav-download {
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--blue);
-      text-decoration: none;
-      transition: opacity 0.15s;
-    }
-    .nav-download:hover { opacity: 0.8; }
+    .nav-cta:hover { opacity: 0.8; background: var(--text) !important; }
 
     /* ── HERO ── */
     #hero {
@@ -651,10 +664,11 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 734px) {
+      nav { padding: 0 20px; }
+      .nav-links li:not(:last-child) { display: none; }
       .feat-grid { grid-template-columns: 1fr; }
       .persona-grid { grid-template-columns: 1fr; }
       .persona-card.wide { grid-column: auto; }
-      .nav-links { display: none; }
       .step-row { grid-template-columns: 32px 1fr; }
     }
   </style>
@@ -664,15 +678,16 @@
 <!-- NAV -->
 <nav>
   <a href="#hero" class="nav-logo">
-    <img src="https://raw.githubusercontent.com/samirpatil2000/mesmer/main/Mesmer/Assest/mesmer_app_logo_with_name.svg" alt="Mesmer" />
+    <img src="https://raw.githubusercontent.com/samirpatil2000/mesmer/main/Mesmer/Assest/mesmer_app_logo.svg" alt="Mesmer Icon" />
+    <span class="nav-logo-name">Mesmer</span>
   </a>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
     <li><a href="#how">How it works</a></li>
     <li><a href="#personas">Personas</a></li>
-    <li><a href="https://github.com/samirpatil2000/mesmer" target="_blank">GitHub</a></li>
+    <li><a href="https://github.com/samirpatil2000/mesmer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://github.com/samirpatil2000/mesmer/releases/download/v1.0.0/Mesmer_Release.dmg" class="nav-cta">Download</a></li>
   </ul>
-  <a href="https://github.com/samirpatil2000/mesmer/releases/download/v1.0.0/Mesmer_Release.dmg" class="nav-download">Download ↓</a>
 </nav>
 
 <!-- HERO -->
@@ -680,7 +695,7 @@
   <canvas id="hero-canvas"></canvas>
 
   <img
-    src="https://raw.githubusercontent.com/samirpatil2000/mesmer/main/Mesmer/Assest/mesmer_app_logo_with_name.svg"
+    src="https://raw.githubusercontent.com/samirpatil2000/mesmer/main/Mesmer/Assest/mesmer_app_logo.svg"
     alt="Mesmer"
     class="hero-logo"
   />
