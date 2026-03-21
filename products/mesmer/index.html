@@ -469,40 +469,77 @@
       color: var(--text);
     }
 
-    /* ── PERSONAS ── */
-    .persona-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 64px;
+    /* ── PROBLEM COLUMNS ── */
+    .problem-setup {
+      font-size: 21px;
+      font-weight: 400;
+      color: var(--text);
+      text-align: center;
+      margin-bottom: 48px;
     }
-    .persona-card {
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 0;
+    }
+    .problem-col {
       background: var(--off);
       border-radius: 18px;
       padding: 32px 28px;
-      transition: background 0.2s;
     }
-    .persona-card:hover { background: #ebebed; }
-    .persona-card.wide { grid-column: 1 / -1; }
-    .persona-label {
+    .problem-label {
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 10px;
-    }
-    .persona-name {
-      font-size: 19px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 10px;
-      letter-spacing: -0.2px;
-    }
-    .persona-eg {
-      font-size: 14px;
       color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .problem-col.mesmer-col .problem-label { color: var(--blue); }
+    .problem-quote {
+      font-size: 15px;
+      color: var(--text);
       line-height: 1.65;
+      font-style: italic;
+      padding: 16px;
+      background: var(--white);
+      border-radius: 10px;
+      border-left: 3px solid var(--border);
+      margin-bottom: 14px;
+    }
+    .problem-col.mesmer-col .problem-quote { border-left-color: var(--blue); }
+    .problem-tag {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .problem-col.mesmer-col .problem-tag { color: var(--blue); }
+
+    /* ── FEATURE LONG-FORM ── */
+    .feature-long {
+      padding: 80px 22px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .feature-long-header {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 400;
+      letter-spacing: -0.3px;
+      line-height: 1.12;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .feature-long-body {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .feature-long-objection {
+      font-size: 14px;
+      color: var(--light);
       font-style: italic;
     }
 
@@ -668,10 +705,7 @@
     @media (max-width: 734px) {
       nav { padding: 0 20px; }
       .nav-links li:not(:last-child) { display: none; }
-      .feat-grid { grid-template-columns: 1fr; }
-      .persona-grid { grid-template-columns: 1fr; }
-      .persona-card.wide { grid-column: auto; }
-      .step-row { grid-template-columns: 32px 1fr; }
+      .problem-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -686,8 +720,6 @@
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
     <li><a href="#how">How it works</a></li>
-    <li><a href="#personas">Personas</a></li>
-    <li><a href="https://github.com/samirpatil2000/mesmer" target="_blank">GitHub ↗</a></li>
     <li><a href="https://github.com/samirpatil2000/mesmer/releases/download/v1.0.0/Mesmer_Release.dmg" class="nav-cta">Download</a></li>
   </ul>
 </nav>
@@ -708,22 +740,24 @@
   </div>
 
   <h1 class="hero-headline">
-    Your voice.<br>Transformed.
+    You speak faster than you type.<br>But you write better than you speak.
   </h1>
 
   <p class="hero-sub">
-    Dictate into any app. Rewrite anything with AI. All private, all on your Mac. Nothing leaves your device.
+    Mesmer learns the gap between the two — and closes it.<br>
+    Speak a message. Get back something that sounds like you wrote it.<br>
+    Not a transcript. Not AI polish. You.
   </p>
 
   <div class="hero-cta">
     <a href="https://github.com/samirpatil2000/mesmer/releases/download/v1.0.0/Mesmer_Release.dmg" class="btn-blue">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Download — Free
+      Download free — macOS
     </a>
-    <a href="https://github.com/samirpatil2000/mesmer" target="_blank" class="btn-outline">View on GitHub</a>
+    <a href="#how" class="btn-outline">See how it works</a>
   </div>
 
-  <p class="hero-meta">v1.0.0 &nbsp;·&nbsp; macOS 26+ &nbsp;·&nbsp; Apple Silicon &amp; Intel</p>
+  <p class="hero-meta">On-device. Private. Open source.</p>
 
   <!-- voice waveform bars -->
   <div class="wave-bars">
@@ -750,210 +784,72 @@
 
 <div class="divider"></div>
 
-<!-- TOOLBAR DEMO -->
-<section id="demo">
-  <div class="demo-inner">
-    <div class="demo-pill">
-      <span class="demo-pill-dot"></span>
-      Auto-Dictation Active &nbsp;·&nbsp; Fn + Space to toggle
+<!-- THE PROBLEM -->
+<section class="section section-center">
+  <p class="problem-setup reveal">Every voice tool today gives you two choices. Neither is right.</p>
+
+  <div class="problem-grid">
+    <div class="problem-col reveal">
+      <div class="problem-label">What you get from dictation tools</div>
+      <div class="problem-quote">"yeah so i was thinking we should probably push the meeting to like thursday or friday because i have that call with the client on wednesday and it runs long usually so yeah"</div>
+      <div class="problem-tag">Unprofessional. You'd never send this.</div>
     </div>
-
-    <p class="demo-context-text">
-      You've selected: <span class="demo-selected">"The meeting is scheduled for tomorrow afternoon"</span>
-    </p>
-
-    <div class="toolbar">
-      <div class="tb-btn">Rewrite</div>
-      <div class="tb-sep"></div>
-      <div class="tb-btn">Formal</div>
-      <div class="tb-sep"></div>
-      <div class="tb-btn">Concise</div>
-      <div class="tb-sep"></div>
-      <div class="tb-btn">Friendly</div>
+    <div class="problem-col reveal">
+      <div class="problem-label">What you get when you "clean it up with AI"</div>
+      <div class="problem-quote">"I wanted to reach out regarding the possibility of rescheduling our upcoming meeting to either Thursday or Friday, as I have a prior commitment on Wednesday that may run over."</div>
+      <div class="problem-tag">Synthetic. Nobody talks like this. They know you didn't write it.</div>
     </div>
-
-    <p class="demo-caption">The floating toolbar · follows you across every app</p>
+    <div class="problem-col mesmer-col reveal">
+      <div class="problem-label">What Mesmer gives you</div>
+      <div class="problem-quote">"Can we shift our meeting to Thursday or Friday? I've got a client call Wednesday that tends to run long."</div>
+      <div class="problem-tag">You. At your best.</div>
+    </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- FEATURES -->
-<section id="features" class="section section-center">
-  <p class="section-tag">Capabilities</p>
-  <h2 class="section-headline">Everything it does.<br>Nothing it doesn't.</h2>
-  <p class="section-sub">Six capabilities. One lightweight app. No cloud required.</p>
+<section id="features">
 
-  <div class="feat-grid">
-    <div class="feat-cell reveal">
-      <span class="feat-icon">🎙️</span>
-      <div class="feat-name">On-Device Dictation</div>
-      <p class="feat-desc">Apple's Speech framework transcribes your voice with precision. No internet, no servers, no data leaving your Mac.</p>
-    </div>
-    <div class="feat-cell reveal">
-      <span class="feat-icon">✨</span>
-      <div class="feat-name">AI Text Rewriting</div>
-      <p class="feat-desc">Select text in any app and transform it using Apple's FoundationModels. Formal, concise, friendly — or your own instruction.</p>
-    </div>
-    <div class="feat-cell reveal">
-      <span class="feat-icon">🌐</span>
-      <div class="feat-name">Works Everywhere</div>
-      <p class="feat-desc">Via macOS Accessibility APIs, Mesmer works in every app — Slack, Xcode, Notes, Safari, everything.</p>
-    </div>
-    <div class="feat-cell reveal">
-      <span class="feat-icon">⚡</span>
-      <div class="feat-name">Auto-Dictation Mode</div>
-      <p class="feat-desc">Persistent listening without holding a key. Toggle with Fn + Space. A minimal pill UI confirms you're live.</p>
-    </div>
-    <div class="feat-cell reveal">
-      <span class="feat-icon">📜</span>
-      <div class="feat-name">History</div>
-      <p class="feat-desc">Every transcription and rewrite is saved locally. Review and reuse past sessions anytime — privately.</p>
-    </div>
-    <div class="feat-cell reveal">
-      <span class="feat-icon">🔒</span>
-      <div class="feat-name">Complete Privacy</div>
-      <p class="feat-desc">All processing stays on your Mac. No accounts. No telemetry. No cloud. Just your words, staying yours.</p>
-    </div>
+  <div class="feature-long reveal">
+    <h3 class="feature-long-header">It knows your writing before you send the first message.</h3>
+    <p class="feature-long-body">Mesmer doesn't start cold. Before you speak a word, connect your Gmail, paste a few Slack messages, drop in an email thread. Mesmer reads how you already write — your rhythm, your register, your shortcuts — and builds your voice profile from that. The first message you dictate already sounds like you typed it.</p>
+    <p class="feature-long-objection">"Won't it take weeks to learn my style?"</p>
   </div>
-</section>
 
-<div class="divider"></div>
+  <div class="divider"></div>
 
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="how-inner">
-    <p class="section-tag">How it works</p>
-    <h2 class="section-headline">Two ways to use Mesmer.</h2>
-
-    <div class="step-list">
-      <div class="step-row reveal">
-        <span class="step-n">01</span>
-        <div>
-          <div class="step-title">Dictate into any text field</div>
-          <p class="step-desc">Place your cursor anywhere. Open Mesmer's floating toolbar, tap the mic, and speak. Your words appear exactly where your cursor is — instantly, without copy-paste.</p>
-        </div>
-      </div>
-      <div class="step-row reveal">
-        <span class="step-n">02</span>
-        <div>
-          <div class="step-title">Select → choose a persona → done</div>
-          <p class="step-desc">Highlight any text in any app. Mesmer's toolbar appears. Choose <code>Formal</code>, <code>Concise</code>, <code>Friendly</code>, or enter a <code>Custom</code> instruction. The selected text is replaced with the rewritten version — on-device, in seconds.</p>
-        </div>
-      </div>
-      <div class="step-row reveal">
-        <span class="step-n">03</span>
-        <div>
-          <div class="step-title">Review your history</div>
-          <p class="step-desc">Every session is logged locally. Open History to revisit, copy, or re-inject any past transcription or rewrite.</p>
-        </div>
-      </div>
-    </div>
+  <div class="feature-long reveal">
+    <h3 class="feature-long-header">It knows who you're talking to. Not just how you talk.</h3>
+    <p class="feature-long-body">The message you send a client is not the message you send your co-founder. Mesmer reads the context — the app you're in, the thread you're replying to — and adjusts automatically. Same voice. Different register. You don't configure anything. It figures it out.</p>
+    <p class="feature-long-objection">"Won't it just use one generic tone for everything?"</p>
   </div>
-</section>
 
-<div class="divider"></div>
+  <div class="divider"></div>
 
-<!-- PERSONAS -->
-<section id="personas" class="section">
-  <p class="section-tag">Rewriting Personas</p>
-  <h2 class="section-headline">One sentence.<br>Four voices.</h2>
-  <p class="section-sub">Choose how your words sound. Mesmer transforms the meaning stays, the tone changes.</p>
-
-  <div class="persona-grid">
-    <div class="persona-card reveal">
-      <div class="persona-label">Formal</div>
-      <div class="persona-name">Professional & precise</div>
-      <p class="persona-eg">"Hey, can we push the meeting?" → "I would like to request a reschedule for our upcoming meeting at your earliest convenience."</p>
-    </div>
-    <div class="persona-card reveal">
-      <div class="persona-label">Concise</div>
-      <div class="persona-name">Short & direct</div>
-      <p class="persona-eg">"I was thinking we could possibly maybe consider looking into this." → "Let's explore this."</p>
-    </div>
-    <div class="persona-card reveal">
-      <div class="persona-label">Friendly</div>
-      <div class="persona-name">Warm & conversational</div>
-      <p class="persona-eg">"Action items remain outstanding." → "Hey, just a heads up — we still have a few things to wrap up!"</p>
-    </div>
-    <div class="persona-card wide reveal">
-      <div class="persona-label">Custom</div>
-      <div class="persona-name">Your instruction, exactly</div>
-      <p class="persona-eg">Type anything. "Translate to Spanish." "Turn this into bullet points." "Make it sound like Hemingway." "Add more technical depth." Mesmer passes your instruction directly to the on-device model.</p>
-    </div>
+  <div class="feature-long reveal">
+    <h3 class="feature-long-header">Every message makes it sharper. You'll notice by day three.</h3>
+    <p class="feature-long-body">Every time you edit a Mesmer output — keep something, change something, delete something — it learns. It notices your patterns without asking. After a week, it rarely needs correction. After a month, you stop thinking about it. You just speak and send. That is what a tool that actually knows you feels like.</p>
+    <p class="feature-long-objection">"AI tools always stay generic no matter how long I use them."</p>
   </div>
-</section>
 
-<div class="divider"></div>
+  <div class="divider"></div>
 
-
-
-<!-- REQUIREMENTS -->
-<section id="requirements" class="section">
-  <p class="section-tag">Requirements</p>
-  <h2 class="section-headline">What you need.</h2>
-
-  <div class="req-list">
-    <div class="req-row reveal">
-      <span class="req-icon">🍎</span>
-      <div>
-        <div class="req-title">macOS 26.0 or newer</div>
-        <div class="req-desc">Required for Apple's FoundationModels framework. Dictation works on earlier releases, but AI rewriting requires macOS 26.</div>
-      </div>
-    </div>
-    <div class="req-row reveal">
-      <span class="req-icon">🎤</span>
-      <div>
-        <div class="req-title">Microphone access</div>
-        <div class="req-desc">Granted once on first launch. Audio is processed entirely on-device — never transmitted anywhere.</div>
-      </div>
-    </div>
-    <div class="req-row reveal">
-      <span class="req-icon">♿</span>
-      <div>
-        <div class="req-title">Accessibility permissions</div>
-        <div class="req-desc">Needed to read selected text from other apps and inject transcribed or rewritten content back into them.</div>
-      </div>
-    </div>
-    <div class="req-row reveal">
-      <span class="req-icon">🗣️</span>
-      <div>
-        <div class="req-title">Speech Recognition</div>
-        <div class="req-desc">A one-time permission grant. Used by Apple's native Speech framework for local, private transcription.</div>
-      </div>
-    </div>
+  <div class="feature-long reveal">
+    <h3 class="feature-long-header">Works in every app. Stays out of your way.</h3>
+    <p class="feature-long-body">A floating toolbar that follows you — Slack, Gmail, WhatsApp Web, Notion, Xcode, anywhere you type. Place your cursor. Speak. Done. No copy-paste. No switching windows. No workflow broken.</p>
+    <p class="feature-long-objection">"These tools only work in some apps."</p>
   </div>
-</section>
 
-<div class="divider"></div>
+  <div class="divider"></div>
 
-<!-- BUILD FROM SOURCE -->
-<section id="build">
-  <div class="build-inner">
-    <p class="section-tag">Open Source</p>
-    <h2 class="section-headline">Build it yourself.</h2>
-    <p class="section-sub" style="margin:0 auto 0;color:var(--muted);font-size:17px;">MIT licensed. Run the script, get a DMG.</p>
-
-    <div class="code-window">
-      <div class="code-title-bar">
-        <div class="cdot cdot-r"></div>
-        <div class="cdot cdot-y"></div>
-        <div class="cdot cdot-g"></div>
-        <span class="code-title">build_dmg.sh</span>
-      </div>
-      <div class="code-body">
-        <span class="code-comment"># Clone</span><br>
-        <span class="code-cmd">git</span> <span class="code-arg">clone</span> <span class="code-url">https://github.com/samirpatil2000/mesmer.git</span><br>
-        <span class="code-cmd">cd</span> mesmer<br><br>
-        <span class="code-comment"># Build — outputs Mesmer_Release.dmg</span><br>
-        <span class="code-cmd">./build_dmg.sh</span>
-      </div>
-    </div>
-
-    <div class="build-note">
-      If macOS flags the app on first launch, run: <code>xattr -cr /Applications/Mesmer.app</code>
-    </div>
+  <div class="feature-long reveal">
+    <h3 class="feature-long-header">Everything stays on your Mac. No accounts. No servers. No exceptions.</h3>
+    <p class="feature-long-body">Dictation runs on Apple's Speech framework. Rewriting runs on Apple's FoundationModels. Nothing touches a cloud. No API key. No subscription that needs your email address. Your words stay yours — completely, technically, permanently.</p>
+    <p class="feature-long-objection">"If it's AI-powered, my messages must be going somewhere."</p>
   </div>
+
 </section>
 
 <div class="divider"></div>
@@ -967,19 +863,18 @@
       alt="Mesmer"
       class="cta-logo"
     />
-    <h2 class="cta-headline">Speak your mind.<br>Beautifully.</h2>
-    <p class="cta-sub">Free. Open-source. Yours.</p>
+    <h2 class="cta-headline">Stop editing your own voice<br>into messages.</h2>
+    <p class="cta-sub">Download Mesmer free. Open source. Runs entirely on your Mac.</p>
     <div class="hero-cta">
       <a href="https://github.com/samirpatil2000/mesmer/releases/download/v1.0.0/Mesmer_Release.dmg" class="btn-blue" style="font-size:19px;padding:14px 28px;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download Mesmer
+        Download for macOS — free
       </a>
     </div>
     <div class="cta-meta">
-      <span>macOS 26.0+</span>
-      <span>100% On-Device</span>
-      <span>MIT License</span>
-      <span>Free Forever</span>
+      <span>macOS 26+ required</span>
+      <span>Apple Silicon & Intel</span>
+      <span>MIT licensed</span>
     </div>
   </div>
 </section>

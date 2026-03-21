@@ -600,7 +600,15 @@
 </section>
 
 <section id="screenshot">
-  <img src="../../assests/buffer-home.png" alt="Buffer Screenshot" class="app-window" />
+  <video id="demo-video" src="../../assests/buffer-video.mp4" class="app-window" autoplay muted playsinline></video>
+  <script>
+    const video = document.getElementById('demo-video');
+    video.addEventListener('ended', () => {
+      setTimeout(() => {
+        video.play();
+      }, 1000);
+    });
+  </script>
 </section>
 
 <section id="features">
