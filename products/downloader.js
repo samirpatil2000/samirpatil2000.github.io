@@ -167,7 +167,7 @@
       <div class="dl-modal">
         <button class="dl-close">&times;</button>
         <div class="dl-title">Almost there!</div>
-        <div class="dl-desc">Enter your email to download ${getProductName()} for free. We'll only send important updates.</div>
+        <div class="dl-desc">Enter your email to download ${getProductName()} for free. We’ll only email you when we ship something new. NO SPAM!</div>
         <form id="dl-form">
           <div class="dl-input-group">
             <input type="email" class="dl-input" id="dl-email" placeholder="you@example.com" required autocomplete="email" />
