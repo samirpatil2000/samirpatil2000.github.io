@@ -1,2 +1,16 @@
+# System files
 .DS_Store
 **/.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Thumbnails
+Thumbs.db
+ehthumbs.db
+
+# Editors & IDEs
+.vscode/
+.idea/
+*.swp
+*~
