@@ -56,3 +56,4 @@ This is the repository for my personal portfolio website hosted at [samirpatil20
 - Improve accessibility features
 - Add Medium RSS feed integration to automatically display latest articles
 - Implement dark/light mode toggle for GitHub repository cards
+
