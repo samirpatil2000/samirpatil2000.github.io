@@ -253,6 +253,33 @@
       animation: fade-up 0.6s 0.46s ease forwards;
       position: relative;
     }
+    .hero-featured-badge {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      animation: fade-up 0.6s 0.52s ease forwards;
+      position: relative;
+    }
+    .hero-featured-badge a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .hero-featured-badge a:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+    .hero-featured-badge img {
+      display: block;
+      width: 200px;
+      height: 67px;
+      max-width: 100%;
+      height: auto;
+    }
     .shortcut-label { font-size: 13px; color: var(--muted); }
     .kbd-row { display: flex; gap: 4px; align-items: center; }
     kbd {
@@ -639,6 +666,16 @@
     <div class="kbd-row">
       <kbd>⇧</kbd><kbd>⌘</kbd><kbd>V</kbd>
     </div>
+  </div>
+  <div class="hero-featured-badge">
+    <a href="https://www.trymacapps.com" target="_blank" rel="noopener">
+      <img
+        src="https://www.trymacapps.com/badge.png"
+        alt="Featured on TryMacApps"
+        width="200"
+        height="67"
+      />
+    </a>
   </div>
 </section>
 
